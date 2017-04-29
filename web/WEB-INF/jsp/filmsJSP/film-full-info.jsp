@@ -13,11 +13,8 @@
     <title>Title</title>
 </head>
 <body>
-Название  ${requestScope.film.name}
-2${requestScope.film.ganre}
-3${requestScope.film.relise_day}
-4${requestScope.film.coutry}
-5${requestScope.film.name}
+<span>${requestScope.film.name}</span>
+<span>${requestScope.film.country}</span>
 
 </body>
 </html>

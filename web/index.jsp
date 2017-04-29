@@ -9,5 +9,6 @@
 <a href="${pageContext.request.contextPath}/usersave">Добавить пользователя</a><br>
 <a href="${pageContext.request.contextPath}/filmsave">Добавить фильм</a><br>
 <a href="${pageContext.request.contextPath}/actdirsave">Добавить сьёмочную группу</a><br>
+<a href="${pageContext.request.contextPath}/filmList">Список фильмов</a>
 </body>
 </html>

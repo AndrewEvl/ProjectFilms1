@@ -1,10 +1,8 @@
 package Service;
 
 import Dao.FilmDao;
-import Entity.ActorDirector;
 import Entity.Film;
 import Entity.Ganre;
-import Entity.Role;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,12 +50,17 @@ public class FilmService {
     }
 
     public List<Film> fullInfoFilm(){
-        return FilmDao.getInstance().fullInfo();
+        return FilmDao.getInstance().allFilms();
     }
 
     public Film filmActDir (Film film,long actDirId, long roleId){
         FilmDao.getInstance().addFilmActorDirector(film,actDirId,roleId);
         return film;
+    }
+
+    public List<Film> allFilms () {
+        return FilmDao.getInstance().allFilms();
+
     }
 
 }

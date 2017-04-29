@@ -30,7 +30,7 @@
     Добавить съёмочную группу<br>
     <select id="firstId" class="form-control" name="firstId">
         <c:forEach items="${requestScope.actDir}" var="actDir">
-            <option value="${actDir.id}">${actDir.id}${"."}${actDir.firstName}${" "}${actDir.lastName}</option>
+            <option value="${actDir.id}">${actDir.firstName}${" "}${actDir.lastName}</option>
         </c:forEach>
         <br>
     </select>
@@ -40,18 +40,18 @@
         </c:forEach>
     </select>
     <br>
-    Добавить съёмочную группу<br>
-    <select id="secondId" class="form-control" name="secondId">
-        <c:forEach items="${requestScope.actDir}" var="actDir">
-            <option value="${actDir.id}">${actDir.firstName}${" "}${actDir.lastName}</option>
-        </c:forEach>
-        <br>
-    </select>
-    <select id="roleOne" class="form-control" name="roleOne">
-        <c:forEach items="${requestScope.role}" var="role">
-            <option value="${role.id}">${role.role}</option>
-        </c:forEach>
-    </select>
+    <%--Добавить съёмочную группу<br>--%>
+    <%--<select id="secondId" class="form-control" name="secondId">--%>
+        <%--<c:forEach items="${requestScope.actDir}" var="actDir">--%>
+            <%--<option value="${actDir.id}">${actDir.firstName}${" "}${actDir.lastName}</option>--%>
+        <%--</c:forEach>--%>
+        <%--<br>--%>
+    <%--</select>--%>
+    <%--<select id="roleOne" class="form-control" name="roleOne">--%>
+        <%--<c:forEach items="${requestScope.role}" var="role">--%>
+            <%--<option value="${role.id}">${role.role}</option>--%>
+        <%--</c:forEach>--%>
+    <%--</select>--%>
     <button type="submit">Save</button>
 </form>
 Если не нашли Актёра или Режисёра можно его добавить!<br>

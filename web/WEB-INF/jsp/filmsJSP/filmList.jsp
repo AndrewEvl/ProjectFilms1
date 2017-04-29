@@ -6,17 +6,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-<label for="name" id="name">Поиск фильма</label>
-<input type="text" name="name"><br>
-<button type="submit">Поиск
-    <a href="${pageContext.request.contextPath}/filminfo"></a>
-</button>
-<br>
-Film name: ${requestScope.filmName}
+<c:forEach items="${requestScope.films}" var="film">
+    <p><a href="${pageContext.request.contextPath}/filmsInfo?id${film.id}">${film.name}${film.coutry}${film.relese_day}</a> </p>
+</c:forEach>
 </body>
 </html>

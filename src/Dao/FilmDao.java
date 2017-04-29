@@ -53,7 +53,7 @@ public class FilmDao {
                 preparedStatement.executeUpdate();
             }
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO films_act_dir (film_id, actor_director_id, role_id) VALUES (?,?,?);")) {
+                    "INSERT INTO films_act_dir (film_id, actor_director_id, role_id) VALUES (?, ?, ?);")) {
                 preparedStatement.setLong(1, film.getId());
                 preparedStatement.setLong(2, actDirId);
                 preparedStatement.setLong(3, roleId);
@@ -69,7 +69,7 @@ public class FilmDao {
     public Optional<Film> addFilmActorDirector(Film film, long actDirId, long roleId) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("INSERT INTO films_act_dir (film_id, actor_director_id, role_id) VALUES (?,?,?)")) {
+                    ("INSERT INTO films_act_dir (film_id, actor_director_id, role_id) VALUES (?, ?, ?)")) {
                 preparedStatement.setLong(1, film.getId());
                 preparedStatement.setLong(2, actDirId);
                 preparedStatement.setLong(3, roleId);
@@ -153,24 +153,35 @@ public class FilmDao {
 
     }
 
+    public List<Film> allFilms() {
+        List<Film> films = new ArrayList<>();
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT * FROM films")) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        films.add(new Film(resultSet.getString("films.name"),
+                                resultSet.getString("films.country")));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return films;
+    }
+
     public List<Film> fullInfo() {
         List<Film> films = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT name, relese_day , country, actors_directors.first_name, actors_directors.last_name, role, " +
-                            "  actors_directors.birthday, genres, nick_name, text AS review, mark FROM films " +
-                            "  JOIN films_act_dir ON films_act_dir.film_id = films.id " +
-                            "  JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +
-                            "  JOIN genres ON films_act_dir.film_id = genres.id " +
-                            "  JOIN users ON films_act_dir.film_id = users.id " +
-                            "  JOIN reviews ON films_act_dir.film_id = reviews.id " +
-                            "  JOIN role ON films_act_dir.role_id = role.id ")) {
+                    ("SELECT name, relese_day, country, genres.genres FROM films JOIN genres ON films.genre_id = genres.id")) {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     films.add(new Film(resultSet.getString("films.name"),
-                            resultSet.getDate("films.relesr_day"),
-                            resultSet.getString("films.coutry"),
-                            resultSet.getString("films.ganre")));
+                            resultSet.getDate("films.relese_day"),
+                            resultSet.getString("films.country"),
+                            resultSet.getString("films.genre")));
                 }
             }
         } catch (SQLException e) {
