@@ -36,8 +36,5 @@ public class UserService {
         return user;
     }
 
-    public List<Role> allRole() {
-        return UserDao.getInstance().findAllRole();
 
-    }
 }

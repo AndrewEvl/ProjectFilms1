@@ -8,6 +8,9 @@ import connection.ConnectionManager;
 
 import javax.xml.transform.Result;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -30,18 +33,18 @@ public class ActorDirectorDao {
         return INSTANCE;
     }
 
-    public Optional<ActorDirector> save(ActorDirector actorDirector, Role role) {
+    public Optional<ActorDirector> save(ActorDirector actorDirector) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    ("INSERT INTO actors_directors (first_name, last_name, birthday, role_id ) VALUES (?, ?, ?, ?)"),
+                    ("INSERT INTO actors_directors (first_name, last_name, birthday) VALUES (?, ?, ?)"),
                     Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, actorDirector.getFirstName());
                 preparedStatement.setString(2, actorDirector.getLastName());
                 preparedStatement.setObject(3, actorDirector.getBirthdayDay());
-                preparedStatement.setLong(4, role.getId());
+                //preparedStatement.setLong(4, role.getId());
                 preparedStatement.executeUpdate();
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if(generatedKeys.next()){
+                if (generatedKeys.next()) {
                     actorDirector.setId(generatedKeys.getLong(1));
                 }
                 return Optional.of(actorDirector);
@@ -66,5 +69,25 @@ public class ActorDirectorDao {
             e.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    public List<ActorDirector> getActDir() {
+        List<ActorDirector> actorDirectors = new ArrayList<>();
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT *FROM actors_directors")) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        actorDirectors.add(new ActorDirector
+                                (resultSet.getLong("actors_directors.id"),
+                                        resultSet.getString("actors_directors.first_name"),
+                                        resultSet.getString("actors_directors.last_name")));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return actorDirectors;
     }
 }

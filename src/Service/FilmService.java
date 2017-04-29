@@ -27,8 +27,8 @@ public class FilmService {
         return INSTANCE;
     }
 
-    public Film addFilm (Film film, long genreId){
-        FilmDao.getInstance().save(film,genreId);
+    public Film addFilm (Film film, long genreId, long actDirId, long roleId){
+        FilmDao.getInstance().save(film,genreId, actDirId,roleId);
         return film;
     }
 

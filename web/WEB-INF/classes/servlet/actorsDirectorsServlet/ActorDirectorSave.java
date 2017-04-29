@@ -23,7 +23,7 @@ public class ActorDirectorSave extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/actorDirJSP/actdirSave.jsp");
-        req.setAttribute("roles", UserService.getInstance().allRole());
+        //req.setAttribute("roles", ActorDirectorService.getInstance().allRole());
         requestDispatcher.forward(req, resp);
     }
 
@@ -33,15 +33,15 @@ public class ActorDirectorSave extends HttpServlet {
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         LocalDate birthday = LocalDate.parse(req.getParameter("birthday"));
-        Long roleId = Long.valueOf(req.getParameter("role"));
+        //Long roleId = Long.valueOf(req.getParameter("role"));
 
         String jspName = firstName.equals("") | lastName.equals("") ? "actdirSave.jsp" : "actdir-success.jsp";
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/actorDirJSP/" + jspName);
-        ActorDirectorService.getInstance().addActorDirector(new ActorDirector(firstName, lastName, birthday), new Role(roleId));
+        ActorDirectorService.getInstance().addActorDirector(new ActorDirector(firstName, lastName, birthday));
         requestDispatcher.forward(req, resp);
 
         System.out.println(firstName);
         System.out.println(lastName);
-        System.out.println(roleId);
+        //System.out.println(roleId);
     }
 }

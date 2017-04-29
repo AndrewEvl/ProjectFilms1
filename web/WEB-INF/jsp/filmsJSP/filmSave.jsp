@@ -12,7 +12,7 @@
     <title>Добавление фильма</title>
 </head>
 <body>
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 <form action="${pageContext.request.contextPath}/filmsave" method="post">
     <label for="name" id="name">Название</label>
     <input type="text" name="name" title="Название"><br>
@@ -27,26 +27,26 @@
         </c:forEach>
     </select>
     <br>
-    Добавить актера<br>
-    <label for="actorFirstName">Имя</label>
-    <input id="actorFirstName" type="text" name="actorFirstName"><br>
-    <label for="actorLastName">Фамилия</label>
-    <input id="actorLastName" type="text" name="actorLastName"><br>
-    <label for="birthday">Дата рождения</label>
-    <input id="birthday" type="date" name="birthday"><br>
+    Добавить съёмочную группу<br>
+    <select id="firstId" class="form-control" name="actDir">
+        <c:forEach items="${requestScope.actDir}" var="actDir">
+            <option value="${actDir.id}">${actDir.firstName}${" "}${actDir.lastName}</option>
+        </c:forEach>
+        <br>
+    </select>
     <select id="roleOne" class="form-control" name="roleOne">
         <c:forEach items="${requestScope.role}" var="role">
             <option value="${role.id}">${role.role}</option>
         </c:forEach>
     </select>
     <br>
-    Добавить режисёра<br>
-    <label for="directorFirstName">Имя</label>
-    <input id="directorFirstName" type="text" name="directorFirstName"><br>
-    <label for="directorLastName">Фамилия</label>
-    <input id="directorLastName" type="text" name="directorLastName"><br>
-    <label for="directorBirthday">Дата рождения</label>
-    <input id="directorBirthday" type="date" name="directorBirthday"><br>
+    Добавить съёмочную группу<br>
+    <select id="secondId" class="form-control" name="actDir">
+        <c:forEach items="${requestScope.actDir}" var="actDir">
+            <option value="${actDir.id}">${actDir.firstName}${" "}${actDir.lastName}</option>
+        </c:forEach>
+        <br>
+    </select>
     <select id="role" class="form-control" name="role">
         <c:forEach items="${requestScope.role}" var="role">
             <option value="${role.id}">${role.role}</option>
@@ -54,6 +54,8 @@
     </select>
     <button type="submit">Save</button>
 </form>
-<%@include file="../footer.jsp"%>
+Если не нашли Актёра или Режисёра можно его добавить!<br>
+<a href="${pageContext.request.contextPath}/actdirsave">Добавить съёмочную группу</a>
+<%@include file="../footer.jsp" %>
 </body>
 </html>
