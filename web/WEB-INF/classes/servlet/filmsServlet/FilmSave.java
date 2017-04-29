@@ -41,10 +41,8 @@ public class FilmSave extends HttpServlet {
         Long directorRole = Long.valueOf(req.getParameter("role"));
         Long actDirIdFirst = Long.valueOf(req.getParameter("firstId"));
 
-        String jspName = name.equals("") | country.equals("")
-                 ? "filmSave.jsp" : "film-success.jsp";
         RequestDispatcher requestDispatcher = getServletContext()
-                .getRequestDispatcher("/WEB-INF/jsp/filmsJSP/" + jspName);
+                .getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-success.jsp");
         FilmService.getInstance().addFilm(new Film(name, releaseDay, country), genreId, actDirIdFirst, directorRole);
         requestDispatcher.forward(req, resp);
         System.out.println(name);

@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by User on 21.04.2017.
  */
-@WebServlet("/")
+@WebServlet("/empty")
 public class findFilmname extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

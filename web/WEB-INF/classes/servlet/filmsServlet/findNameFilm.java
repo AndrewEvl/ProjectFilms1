@@ -1,5 +1,8 @@
 package servlet.filmsServlet;
 
+import Entity.Film;
+import Service.FilmService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +24,9 @@ public class findNameFilm extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String filmName = req.getParameter("filmName");
-        req.setAttribute("filmName", filmName);
+        String filmName = req.getParameter("film");
+        req.setAttribute("film", filmName);
+        FilmService.getInstance().nameFilm(new Film(filmName));
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/filmList.jsp");
         requestDispatcher.forward(req, resp);
     }

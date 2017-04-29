@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<label for="name">Поиск фильма</label>
+<label for="name" id="name">Поиск фильма</label>
 <input type="text" name="name"><br>
 <button type="submit">Поиск
     <a href="${pageContext.request.contextPath}/filminfo"></a>
