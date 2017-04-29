@@ -13,17 +13,17 @@
 <body>
 <%@include file="../header.jsp"%>
 <form action="${pageContext.request.contextPath}/usersave" method="post">
-    <label for="firstName">Имя</label>
+    <label for="firstName" id="firstName">Имя</label>
     <input type="text" name="firstName"><br>
-    <label for="lastName">Фимилия</label>
+    <label for="lastName" id="lastName">Фимилия</label>
     <input type="text" name="lastName"><br>
-    <label for="nickName">Псевдоним</label>
+    <label for="nickName" id="nickName">Псевдоним</label>
     <input type="text" name="nickName"><br>
-    <label for="birthday">Дата рождения</label>
+    <label for="birthday" id="birthday">Дата рождения</label>
     <input type="date" name="birthday"><br>
     <label for="password">Пароль</label>
-    <input type="password" name="password" title="password"><br>
-    <label for="mail">Электронная почта</label>
+    <input type="password" id="password" name="password" title="password"><br>
+    <label for="mail" id="mail">Электронная почта</label>
     <input type="email" name="mail"><br>
     <button type="submit">Save</button>
 </form>

@@ -55,8 +55,8 @@ public class FilmService {
         return FilmDao.getInstance().fullInfo();
     }
 
-    public Film filmActDir (Film film, ActorDirector actorDirector, Role role){
-        FilmDao.getInstance().addFilmActorDirector(film,actorDirector,role);
+    public Film filmActDir (Film film,long actDirId, long roleId){
+        FilmDao.getInstance().addFilmActorDirector(film,actDirId,roleId);
         return film;
     }
 

@@ -19,13 +19,8 @@
     <input id="lastName" type="text" name="lastName"><br>
     <label for="birthday">Дата рождения</label>
     <input id="birthday" type="date" name="birthday"><br>
-    <select id="role" class="form-control" name="role" title="role">
-        <%--<c:forEach items="${requestScope.roles}" var="role">--%>
-            <%--<option value="${role.id}">${role.role}</option>--%>
-        <%--</c:forEach>--%>
-    </select>
     <br>
-    <button type="submit">Save</button>
+    <button type="submit">Save</button><p>
     <a href="${pageContext.request.contextPath}/">На главную</a>
 </form>
 </body>

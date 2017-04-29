@@ -41,7 +41,6 @@ public class ActorDirectorDao {
                 preparedStatement.setString(1, actorDirector.getFirstName());
                 preparedStatement.setString(2, actorDirector.getLastName());
                 preparedStatement.setObject(3, actorDirector.getBirthdayDay());
-                //preparedStatement.setLong(4, role.getId());
                 preparedStatement.executeUpdate();
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {

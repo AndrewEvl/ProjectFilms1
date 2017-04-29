@@ -20,7 +20,7 @@
     <input type="date" name="releaseDay" title="Дата выхода"><br>
     <label for="country" id="country">Страна выпуска</label>
     <input type="text" name="country" title="Страна выпуска"><br>
-    <label class="form-lable" for="genres">Ganre</label>
+    <label class="form-lable" for="genres">Жанр</label>
     <select id="genres" class="form-control" name="genre">
         <c:forEach items="${requestScope.genres}" var="genre">
             <option value="${genre.id}">${genre.name}</option>
@@ -28,26 +28,26 @@
     </select>
     <br>
     Добавить съёмочную группу<br>
-    <select id="firstId" class="form-control" name="actDir">
+    <select id="firstId" class="form-control" name="firstId">
         <c:forEach items="${requestScope.actDir}" var="actDir">
-            <option value="${actDir.id}">${actDir.firstName}${" "}${actDir.lastName}</option>
+            <option value="${actDir.id}">${actDir.id}${"."}${actDir.firstName}${" "}${actDir.lastName}</option>
         </c:forEach>
         <br>
     </select>
-    <select id="roleOne" class="form-control" name="roleOne">
+    <select id="role" class="form-control" name="role">
         <c:forEach items="${requestScope.role}" var="role">
             <option value="${role.id}">${role.role}</option>
         </c:forEach>
     </select>
     <br>
     Добавить съёмочную группу<br>
-    <select id="secondId" class="form-control" name="actDir">
+    <select id="secondId" class="form-control" name="secondId">
         <c:forEach items="${requestScope.actDir}" var="actDir">
             <option value="${actDir.id}">${actDir.firstName}${" "}${actDir.lastName}</option>
         </c:forEach>
         <br>
     </select>
-    <select id="role" class="form-control" name="role">
+    <select id="roleOne" class="form-control" name="roleOne">
         <c:forEach items="${requestScope.role}" var="role">
             <option value="${role.id}">${role.role}</option>
         </c:forEach>

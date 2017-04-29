@@ -66,13 +66,13 @@ public class FilmDao {
         return Optional.empty();
     }
 
-    public Optional<Film> addFilmActorDirector(Film film, ActorDirector actorDirector, Role role) {
+    public Optional<Film> addFilmActorDirector(Film film, long actDirId, long roleId) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
                     ("INSERT INTO films_act_dir (film_id, actor_director_id, role_id) VALUES (?,?,?)")) {
                 preparedStatement.setLong(1, film.getId());
-                preparedStatement.setLong(2, actorDirector.getId());
-                preparedStatement.setLong(3, role.getId());
+                preparedStatement.setLong(2, actDirId);
+                preparedStatement.setLong(3, roleId);
                 preparedStatement.executeUpdate();
             }
             return Optional.of(film);
