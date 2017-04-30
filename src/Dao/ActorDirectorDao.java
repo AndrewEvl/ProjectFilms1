@@ -78,8 +78,7 @@ public class ActorDirectorDao {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
                         actorDirectors.add(new ActorDirector
-                                (resultSet.getLong("actors_directors.id"),
-                                        resultSet.getString("actors_directors.first_name"),
+                                (resultSet.getString("actors_directors.first_name"),
                                         resultSet.getString("actors_directors.last_name")));
                     }
                 }
@@ -88,5 +87,24 @@ public class ActorDirectorDao {
             e.printStackTrace();
         }
         return actorDirectors;
+    }
+
+    public Optional<ActorDirector> findById (long id) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT * FROM actors_directors WHERE id = ?")) {
+                preparedStatement.setLong(1, id);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return Optional.of(new ActorDirector(resultSet.getString("actors_directors.first_name"),
+                                resultSet.getString("actors_directors.last_name"),
+                                (LocalDate) resultSet.getObject("actors_directors.birthday")));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }
