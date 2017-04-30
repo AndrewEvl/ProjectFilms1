@@ -13,7 +13,7 @@
 </head>
 <body>
 <c:forEach items="${requestScope.films}" var="film">
-    <p><a href="${pageContext.request.contextPath}/filmsInfo?id${film.id}">${film.name}${film.coutry}${film.relese_day}</a> </p>
+    <p><a href="${pageContext.request.contextPath}/filmList?id${film.id}">${film.name}${film.coutry}${film.relese_day}</a> </p>
 </c:forEach>
 </body>
 </html>

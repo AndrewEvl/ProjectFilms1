@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-
+${requestScope.actor.firstName}
+${requestScope.actor.lastName}
 </body>
 </html>
