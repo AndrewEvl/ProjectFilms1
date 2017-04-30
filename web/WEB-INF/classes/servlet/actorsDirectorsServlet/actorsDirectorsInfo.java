@@ -18,8 +18,8 @@ public class actorsDirectorsInfo extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/actorDirJSP/actorDirectorInfo.jsp");
         req.setAttribute("info", ActorDirectorService.getInstance().fullActorDirector());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/actorDirJSP/actorDirectorInfo.jsp");
         requestDispatcher.forward(req,resp);
     }
 }
