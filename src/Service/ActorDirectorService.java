@@ -44,4 +44,7 @@ public class ActorDirectorService {
         return FilmDao.getInstance().addFilmActorDirector(film,actDirId,roleId);
 
     }
+    public Optional<ActorDirector> fullInfoActors (long id){
+       return ActorDirectorDao.getInstance().findById(id);
+    }
 }
