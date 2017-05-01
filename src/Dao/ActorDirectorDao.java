@@ -1,9 +1,6 @@
 package Dao;
 
-import Entity.ActorDirector;
-import Entity.Ganre;
-import Entity.Review;
-import Entity.Role;
+import Entity.*;
 import connection.ConnectionManager;
 
 import javax.xml.transform.Result;
@@ -12,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 /**
@@ -89,7 +87,30 @@ public class ActorDirectorDao {
         return actorDirectors;
     }
 
-    public Optional<ActorDirector> findById (long id) {
+    public List<ActorDirector> listActorDirector(long id) {
+        List<ActorDirector> actorDirectors = new ArrayList <>();
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT first_name, last_name, films.name , role.role FROM actors_directors JOIN films_act_dir ON actor_director_id = actors_directors.id JOIN films ON films_act_dir.film_id = films.id JOIN role ON films_act_dir.role_id = role.id WHERE actors_directors.id = ?;")) {
+                preparedStatement.setLong(1,id);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+//                        actorDirectors.add(new ActorDirector (resultSet.getLong("actors_directors.id"),
+//                                resultSet.getString("actors_directors.first_name"),
+//                                resultSet.getString("actors_directors.last_name")),
+//                                new Film(resultSet.getString("films.name")),
+//                                new Role(resultSet.getString("role.role")));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return actorDirectors;
+    }
+
+
+    public Optional<ActorDirector> findById(long id) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
                     ("SELECT * FROM actors_directors WHERE id = ?")) {
@@ -98,7 +119,7 @@ public class ActorDirectorDao {
                     if (resultSet.next()) {
                         return Optional.of(new ActorDirector(resultSet.getString("actors_directors.first_name"),
                                 resultSet.getString("actors_directors.last_name")));
-                                //resultSet.getObject("actors_directors.birthday")));
+                        //resultSet.getObject("actors_directors.birthday")));
                     }
                 }
             }
