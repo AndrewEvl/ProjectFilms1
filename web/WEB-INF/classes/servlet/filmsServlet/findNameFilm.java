@@ -14,19 +14,11 @@ import java.io.IOException;
 /**
  * Created by User on 21.04.2017.
  */
-@WebServlet("/filmList")
+@WebServlet("/Emty")
 public class findNameFilm extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/filmList.jsp");
-        requestDispatcher.forward(req, resp);
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String filmName = req.getParameter("film");
-        req.setAttribute("film", filmName);
-        FilmService.getInstance().nameFilm(new Film(filmName));
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/filmList.jsp");
         requestDispatcher.forward(req, resp);
     }
