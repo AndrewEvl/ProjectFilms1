@@ -26,7 +26,7 @@ public class FilmService {
     }
 
     public Film addFilm (Film film, long genreId, long actDirId, long roleId){
-        FilmDao.getInstance().save(film,genreId, actDirId,roleId);
+        FilmDao.getInstance().save(film,genreId,actDirId,roleId);
         return film;
     }
 
@@ -51,11 +51,6 @@ public class FilmService {
 
     public List<Film> fullInfoFilm(){
         return FilmDao.getInstance().allFilms();
-    }
-
-    public Film filmActDir (Film film,long actDirId, long roleId){
-        FilmDao.getInstance().addFilmActorDirector(film,actDirId,roleId);
-        return film;
     }
 
     public List<Film> allFilms () {

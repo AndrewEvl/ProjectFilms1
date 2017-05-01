@@ -1,9 +1,7 @@
 package Dao;
 
-import Entity.ActorDirector;
 import Entity.Film;
 import Entity.Ganre;
-import Entity.Role;
 import connection.ConnectionManager;
 
 import java.sql.*;
@@ -31,7 +29,7 @@ public class FilmDao {
         return INSTANCE;
     }
 
-    public Optional<Film> save(Film film, long genreId, long actDirId, long roleId) {
+    public Optional<Film> save(Film film,long genreId,long actDirId, long roleId) {
         try (Connection connection = ConnectionManager.getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement preparedStatement = connection.prepareStatement
@@ -57,6 +55,7 @@ public class FilmDao {
                 preparedStatement.setLong(1, film.getId());
                 preparedStatement.setLong(2, actDirId);
                 preparedStatement.setLong(3, roleId);
+                preparedStatement.executeUpdate();
             }
             connection.commit();
             return Optional.of(film);
@@ -66,25 +65,9 @@ public class FilmDao {
         return Optional.empty();
     }
 
-    public Optional<Film> addFilmActorDirector(Film film, long actDirId, long roleId) {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("INSERT INTO films_act_dir (film_id, actor_director_id, role_id) VALUES (?, ?, ?)")) {
-                preparedStatement.setLong(1, film.getId());
-                preparedStatement.setLong(2, actDirId);
-                preparedStatement.setLong(3, roleId);
-                preparedStatement.executeUpdate();
-            }
-            return Optional.of(film);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
     public Optional<Film> getById(long id) {
         try (Connection connection = ConnectionManager.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement("" +
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "SELECT * FROM films WHERE id = ?")) {
                 preparedStatement.setLong(1, id);
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -160,8 +143,7 @@ public class FilmDao {
                     ("SELECT * FROM films")) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        films.add(new Film(resultSet.getString("films.name"),
-                                resultSet.getString("films.country")));
+                        films.add(new Film(resultSet.getString("films.name")));
                     }
                 }
             }

@@ -40,10 +40,6 @@ public class ActorDirectorService {
         return UserDao.getInstance().findAllRole();
     }
 
-    public Optional<Film> filmActDir (Film film,long actDirId, long roleId){
-        return FilmDao.getInstance().addFilmActorDirector(film,actDirId,roleId);
-
-    }
     public Optional<ActorDirector> fullInfoActors (long id){
        return ActorDirectorDao.getInstance().findById(id);
     }
