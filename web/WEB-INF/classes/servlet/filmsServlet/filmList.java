@@ -14,12 +14,11 @@ import java.io.IOException;
  * Created by User on 21.04.2017.
  */
 @WebServlet("/filmList")
-public class findFilmname extends HttpServlet{
+public class filmList extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/filmList.jsp");
         req.setAttribute("films",FilmService.getInstance().allFilms());
         requestDispatcher.forward(req, resp);
     }
-
 }
