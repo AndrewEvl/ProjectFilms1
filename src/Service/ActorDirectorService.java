@@ -1,10 +1,8 @@
 package Service;
 
 import Dao.ActorDirectorDao;
-import Dao.FilmDao;
 import Dao.UserDao;
 import Entity.ActorDirector;
-import Entity.Film;
 import Entity.Role;
 
 import java.util.List;

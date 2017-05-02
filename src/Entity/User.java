@@ -16,6 +16,18 @@ public class User {
     private String password;
     private String mail;
     private Set<Review> reviews = new HashSet<>();
+    private String role;
+
+    public User(String password, String mail) {
+        this.password = password;
+        this.mail = mail;
+    }
+
+    public User(String password, String mail, String role) {
+        this.password = password;
+        this.mail = mail;
+        this.role = role;
+    }
 
     public User() {
     }
@@ -153,5 +165,13 @@ public class User {
 
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

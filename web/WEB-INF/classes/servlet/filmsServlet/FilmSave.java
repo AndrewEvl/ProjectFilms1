@@ -1,11 +1,8 @@
 package servlet.filmsServlet;
 
-import Entity.ActorDirector;
 import Entity.Film;
-import Entity.Role;
 import Service.ActorDirectorService;
 import Service.FilmService;
-import Service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

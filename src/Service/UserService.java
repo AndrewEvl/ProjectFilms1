@@ -1,11 +1,9 @@
 package Service;
 
 import Dao.UserDao;
-import Entity.Role;
 import Entity.User;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by User on 15.04.2017.
@@ -34,6 +32,10 @@ public class UserService {
     public User userInfo(User user) {
         UserDao.getInstance().info(user);
         return user;
+    }
+
+    public List<User> loginUser (User user){
+        return UserDao.getInstance().findAllUsers(user);
     }
 
 

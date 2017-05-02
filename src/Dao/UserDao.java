@@ -46,13 +46,6 @@ public class UserDao {
                     user.setId(generatedKeys.getLong(1));
                 }
             }
-            //try (PreparedStatement preparedStatement = connection.prepareStatement(
-            // ("INSERT INTO user_role_user (users_id, users_role_id) VALUES (?, ?)"))) {
-            // preparedStatement.setLong(1, user.getId());
-            //preparedStatement.setString(2, "user_role_id");
-            //preparedStatement.executeUpdate();
-            // }
-            //connection.commit();
             return Optional.of(user);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,5 +88,28 @@ public class UserDao {
             e.printStackTrace();
         }
         return role;
+    }
+
+    public List<User> findAllUsers(User user) {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT mail, users.password, users_role.role_user FROM users " +
+                            "JOIN user_role_user ON users.id = user_role_user.users_id " +
+                            "JOIN users_role ON user_role_user.users_role_id = users_role.id WHERE users.mail = ?")) {
+                preparedStatement.setString(1, "users.mail");
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()){
+                        users.add(new User(resultSet.getString("users.mail"),
+                                resultSet.getString("users.password"),
+                                resultSet.getString("users_role.role_user")));
+                    }
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 }

@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <form action="${pageContext.request.contextPath}/changeLanguage" method="get">
     <select name="language" onchange="submit()">
         <option value="ru_RU" ${sessionScope.currentLanguage eq 'ru_RU' ? 'selected' : ''}>Русский</option>

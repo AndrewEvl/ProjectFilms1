@@ -1,8 +1,6 @@
 package servlet.reviewsServlet;
 
-import Entity.Film;
 import Entity.Review;
-import Entity.User;
 import Service.ReviewService;
 
 import javax.servlet.RequestDispatcher;

@@ -1,9 +1,7 @@
 package servlet.actorsDirectorsServlet;
 
 import Entity.ActorDirector;
-import Entity.Role;
 import Service.ActorDirectorService;
-import Service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

@@ -15,6 +15,15 @@ public class ActorDirector {
     private Set<Film> film = new HashSet<>();
     private Role role;
 
+    public ActorDirector(String firstName, String lastName, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+    }
+
+    public ActorDirector() {
+    }
+
     public ActorDirector (String firstName, String lastName, Set<Film> film, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -134,7 +143,7 @@ public class ActorDirector {
         return birthdayDay;
     }
 
-    public void setBirthdayDay(LocalDate birthdayDay) {
+    public void setBirthdayDay (LocalDate birthdayDay) {
         this.birthdayDay = birthdayDay;
     }
 
@@ -153,4 +162,6 @@ public class ActorDirector {
     public void setRole(Role role) {
         this.role = role;
     }
+
+
 }
