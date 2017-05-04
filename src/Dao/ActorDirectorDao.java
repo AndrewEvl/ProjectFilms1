@@ -90,7 +90,7 @@ public class ActorDirectorDao {
                             "JOIN films ON films_act_dir.film_id = films.id " +
                             "JOIN role ON films_act_dir.role_id = role.id WHERE actors_directors.id = ?;")) {
                 preparedStatement.setLong(1, id);
-                Set<Film> films = new HashSet<>();
+                Set<Film> films = new HashSet<> ();
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
                         films.add(new Film(resultSet.getString("films.name")));
