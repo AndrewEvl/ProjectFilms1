@@ -13,5 +13,6 @@
 <body>
 ${requestScope.actor.firstName}
 ${requestScope.actor.lastName}
+${requestScope.actor.role}
 </body>
 </html>

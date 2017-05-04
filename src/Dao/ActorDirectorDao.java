@@ -4,9 +4,7 @@ import Entity.*;
 import connection.ConnectionManager;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 /**
@@ -85,7 +83,6 @@ public class ActorDirectorDao {
     }
 
     public Optional<ActorDirector> listActorDirector(long id) {
-        //List<ActorDirector> actorDirectors = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
                     ("SELECT first_name, last_name, films.name , role.role FROM actors_directors " +
@@ -93,14 +90,17 @@ public class ActorDirectorDao {
                             "JOIN films ON films_act_dir.film_id = films.id " +
                             "JOIN role ON films_act_dir.role_id = role.id WHERE actors_directors.id = ?;")) {
                 preparedStatement.setLong(1, id);
+                Set<Film> films = new HashSet<>();
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        return Optional.of(new ActorDirector(resultSet.getString("actor_director.first_name"),
-                                resultSet.getString("actor_director.last_name"),
-                                //set<Films>
+                    while (resultSet.next()) {
+                        films.add(new Film(resultSet.getString("films.name")));
+                        return Optional.of(new ActorDirector(resultSet.getString("actors_directors.first_name"),
+                                resultSet.getString("actors_directors.last_name"),
+                                //new HashSet<Film> (),
                                 new Role(resultSet.getString("role.role"))));
                     }
                 }
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

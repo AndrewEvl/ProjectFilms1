@@ -41,4 +41,8 @@ public class ActorDirectorService {
     public Optional<ActorDirector> fullInfoActors (long id){
        return ActorDirectorDao.getInstance().findById(id);
     }
+
+    public Optional<ActorDirector> actDirInfo(long id) {
+        return ActorDirectorDao.getInstance().listActorDirector(id);
+    }
 }
