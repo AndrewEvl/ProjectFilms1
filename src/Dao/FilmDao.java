@@ -1,14 +1,11 @@
 package Dao;
 
-import Entity.Film;
-import Entity.Ganre;
+import Entity.*;
 import connection.ConnectionManager;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by User on 08.04.2017.
@@ -117,14 +114,14 @@ public class FilmDao {
         return Optional.empty();
     }
 
-    public List<Ganre> findAllGenre() {
-        List<Ganre> ganre = new ArrayList<>();
+    public List<Genre> findAllGenre() {
+        List<Genre> genre = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
                     ("SELECT * FROM genres")) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        ganre.add(new Ganre(resultSet.getLong("genres.id"),
+                        genre.add(new Genre(resultSet.getLong("genres.id"),
                                 resultSet.getString("genres.genres")));
                     }
                 }
@@ -132,7 +129,7 @@ public class FilmDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return ganre;
+        return genre;
 
     }
 
@@ -170,6 +167,45 @@ public class FilmDao {
             e.printStackTrace();
         }
         return films;
+    }
+
+    public Optional<Film> listFilms (long id){
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    //, role.role, genres.genres, reviews.text, users.nick_name
+                    ("SELECT films.name,genres.genres, actors_directors.last_name, reviews.text FROM films " +
+                            "JOIN films_act_dir ON films.id = films_act_dir.film_id " +
+                            "JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +
+                            "JOIN genres ON films.genre_id = genres.id " +
+                            "LEFT JOIN user_review ON films.id = user_review.film_id " +
+                            "LEFT JOIN reviews ON user_review.review_id = reviews.id  WHERE films.id = ?;")) {
+                preparedStatement.setLong(1,id);
+
+                Set<ActorDirector> actorsDirectors = new HashSet<>();
+                Set<Review> reviews = new HashSet<>();
+                Film film = new Film();
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()){
+                    while (resultSet.next()){
+                        film.setName(resultSet.getString("films.name"));
+                        actorsDirectors.add(new ActorDirector(resultSet.getString("actors_directors.last_name")));
+                        film.setActors(actorsDirectors);
+                        reviews.add(new Review(resultSet.getString("reviews.text")));
+                        film.setReviews(reviews);
+                        Genre genre = new Genre(resultSet.getString("genres.genres"));
+                        film.setGenre(genre);
+                    }
+//                    if (resultSet.next()) {
+//                        Genre genre = new Genre(resultSet.getString("genres.genres"));
+//                        Optional.of(new Film(resultSet.getString("films.name"),
+//                                actorsDirectors,genre, reviews));
+                    return Optional.of(film);
+                }
+            }
+                 } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }
 

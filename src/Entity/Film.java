@@ -15,10 +15,25 @@ public class Film {
     private Set<ActorDirector> director = new HashSet<>();
     private LocalDate releaseDay;
     private String county;
-    private Ganre ganre;
+    private Genre genre;
     private Set<Review> reviews = new HashSet<>();
 
 
+
+    public Film(String name, Set<ActorDirector> actors, Genre genre, Set<Review> reviews) {
+        this.name = name;
+        this.actors = actors;
+        this.genre = genre;
+        this.reviews = reviews;
+    }
+
+    public Film(String name, Set<ActorDirector> actors, Set<ActorDirector> director, Genre genre, Set<Review> reviews) {
+        this.name = name;
+        this.actors = actors;
+        this.director = director;
+        this.genre = genre;
+        this.reviews = reviews;
+    }
 
     public Film(String name, String county) {
         this.name = name;
@@ -37,9 +52,9 @@ public class Film {
         this.id = id;
     }
 
-    public Film (Ganre genre, long id) {
+    public Film (Genre genre, long id) {
         this.id = id;
-        this.ganre = genre;
+        this.genre = genre;
     }
 
     public Film(String name) {
@@ -50,11 +65,11 @@ public class Film {
         this.releaseDay = releaseDay;
     }
 
-    public Film(String name, LocalDate releaseDay, String county, Ganre genre) {
+    public Film(String name, LocalDate releaseDay, String county, Genre genre) {
         this.name = name;
         this.releaseDay = releaseDay;
         this.county = county;
-        this.ganre = genre;
+        this.genre = genre;
     }
 
     public Film(LocalDate releaseDay, String name) {
@@ -80,7 +95,7 @@ public class Film {
                 ", director=" + director +
                 ", releaseDay=" + releaseDay +
                 ", county='" + county + '\'' +
-                ", genre='" + ganre + '\'' +
+                ", genre='" + genre + '\'' +
                 ", reviews=" + reviews +
                 '}';
     }
@@ -146,12 +161,12 @@ public class Film {
         this.county = county;
     }
 
-    public Ganre getGenre() {
-        return ganre;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setGenre(Ganre genre) {
-        this.ganre = genre;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public Set<Review> getReviews() {

@@ -18,6 +18,15 @@ public class User {
     private Set<Review> reviews = new HashSet<>();
     private String role;
 
+    public User(String nickName, Set<Review> reviews) {
+        this.nickName = nickName;
+        this.reviews = reviews;
+    }
+
+    public User(String nickName) {
+        this.nickName = nickName;
+    }
+
     public User(String password, String mail) {
         this.password = password;
         this.mail = mail;

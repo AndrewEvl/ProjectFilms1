@@ -2,9 +2,10 @@ package Service;
 
 import Dao.FilmDao;
 import Entity.Film;
-import Entity.Ganre;
+import Entity.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by User on 18.04.2017.
@@ -44,7 +45,7 @@ public class FilmService {
         return film;
     }
 
-    public List<Ganre> fullGenres() {
+    public List<Genre> fullGenres() {
         return FilmDao.getInstance().findAllGenre();
     }
 
@@ -54,7 +55,9 @@ public class FilmService {
 
     public List<Film> allFilms () {
         return FilmDao.getInstance().allFilms();
-
     }
 
+    public Optional<Film> listFilms (long id){
+        return FilmDao.getInstance().listFilms(id);
+    }
 }

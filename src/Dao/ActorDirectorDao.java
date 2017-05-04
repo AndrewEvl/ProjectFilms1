@@ -85,22 +85,35 @@ public class ActorDirectorDao {
     public Optional<ActorDirector> listActorDirector(long id) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT first_name, last_name, films.name , role.role FROM actors_directors " +
-                            "JOIN films_act_dir ON actor_director_id = actors_directors.id " +
+                    ("SELECT actors_directors.first_name, actors_directors.last_name, films.name, role.role FROM actors_directors " +
+                            "JOIN films_act_dir ON actors_directors.id = films_act_dir.actor_director_id " +
                             "JOIN films ON films_act_dir.film_id = films.id " +
-                            "JOIN role ON films_act_dir.role_id = role.id WHERE actors_directors.id = ?;")) {
+                            "JOIN role ON actors_directors.role_id = role.id WHERE actors_directors.id = ?;")) {
                 preparedStatement.setLong(1, id);
-                Set<Film> films = new HashSet<> ();
+                Set<Film> films = new HashSet<>();
+                ActorDirector actorDirector = new ActorDirector();
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        films.add(new Film(resultSet.getString("films.name")));
-                        return Optional.of(new ActorDirector(resultSet.getString("actors_directors.first_name"),
-                                resultSet.getString("actors_directors.last_name"),
-                                //new HashSet<Film> (),
-                                new Role(resultSet.getString("role.role"))));
+
+                    if (resultSet.next()) {
+                        actorDirector.setFirstName(resultSet.getString("actors_directors.first_name"));
+                        actorDirector.setLastName(resultSet.getString("actors_directors.last_name"));
+
+                        while (resultSet.next()) {
+                            //new Role(resultSet.getString("role.role"))
+                            films.add(new Film(resultSet.getString("films.name")));
+                            actorDirector.setFilm(films);
+                        }
+//                    while (resultSet.next()) {
+//                        films.add(new Film(resultSet.getString("films.name")));
+//                    }
+//                    if (resultSet.next()) {
+//                        Optional.of(new ActorDirector(resultSet.getString("actors_directors.first_name"),
+//                                resultSet.getString("actors_directors.last_name"),
+//                                films, new Role(resultSet.getString("role.role"))));
+//                    }
                     }
                 }
-
+                return Optional.of(actorDirector);
             }
         } catch (SQLException e) {
             e.printStackTrace();

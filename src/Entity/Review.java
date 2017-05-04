@@ -10,6 +10,16 @@ public class Review {
     private String text;
     private double mark;
 
+
+    public Review(User user, String text) {
+        this.user = user;
+        this.text = text;
+    }
+
+    public Review(String text) {
+        this.text = text;
+    }
+
     public Review(String text, double mark) {
         this.text = text;
         this.mark = mark;

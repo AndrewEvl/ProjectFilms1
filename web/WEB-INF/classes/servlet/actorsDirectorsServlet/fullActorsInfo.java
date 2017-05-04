@@ -18,6 +18,5 @@ public class fullActorsInfo extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("actor", ActorDirectorService.getInstance().actDirInfo(Long.parseLong((req.getParameter("id")))));
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/actorDirJSP/actor-full-info.jsp").forward(req, resp);
-
     }
 }

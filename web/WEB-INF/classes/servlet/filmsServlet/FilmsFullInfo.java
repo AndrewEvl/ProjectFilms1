@@ -12,11 +12,11 @@ import java.io.IOException;
 /**
  * Created by User on 11.04.2017.
  */
-@WebServlet("/filminfo")
+@WebServlet("/films-info")
 public class FilmsFullInfo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       req.setAttribute("film", FilmService.getInstance().fullInfoFilm());
+       req.setAttribute("film", FilmService.getInstance().listFilms(Long.parseLong(req.getParameter("id"))));
        getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-full-info.jsp").forward(req, resp);
     }
 }

@@ -15,6 +15,15 @@ public class ActorDirector {
     private Set<Film> film = new HashSet<>();
     private Role role;
 
+    public ActorDirector(String lastName, Role role) {
+        this.lastName = lastName;
+        this.role = role;
+    }
+
+    public ActorDirector(String lastName) {
+        this.lastName = lastName;
+    }
+
     public ActorDirector(String firstName, String lastName, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
