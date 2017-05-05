@@ -94,15 +94,9 @@ public class ActorDirectorDao {
                 ActorDirector actorDirector = new ActorDirector();
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                    if (resultSet.next()) {
-                        actorDirector.setFirstName(resultSet.getString("actors_directors.first_name"));
-                        actorDirector.setLastName(resultSet.getString("actors_directors.last_name"));
+//                    if (resultSet.next()) {
 
-                        while (resultSet.next()) {
-                            //new Role(resultSet.getString("role.role"))
-                            films.add(new Film(resultSet.getString("films.name")));
-                            actorDirector.setFilm(films);
-                        }
+
 //                    while (resultSet.next()) {
 //                        films.add(new Film(resultSet.getString("films.name")));
 //                    }
@@ -111,7 +105,14 @@ public class ActorDirectorDao {
 //                                resultSet.getString("actors_directors.last_name"),
 //                                films, new Role(resultSet.getString("role.role"))));
 //                    }
+//                    }
+                    while (resultSet.next()) {
+                        //new Role(resultSet.getString("role.role"))
+                        actorDirector.setFirstName(resultSet.getString("actors_directors.first_name"));
+                        actorDirector.setLastName(resultSet.getString("actors_directors.last_name"));
+                        films.add(new Film(resultSet.getString("films.name")));
                     }
+                    actorDirector.setFilm(films);
                 }
                 return Optional.of(actorDirector);
             }

@@ -14,9 +14,10 @@
     <title>Title</title>
 </head>
 <body>
-<c:forEach items="${requestScope.actor}" var="actor">
-    ${actor.firstName}${" "}${actor.lastName}
-    ${actor.films}${" "}${actor.actor.role}
+${requestScope.actor.firstName}
+${requestScope.actor.lastName}
+<c:forEach items="${requestScope.actor.film}" var="film">
+    ${film.name}
 </c:forEach>
 <%--Фильм Роль : ${actor.firstName}${" "}${actor.lastName}<br>--%>
 </body>
