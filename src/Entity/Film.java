@@ -18,7 +18,10 @@ public class Film {
     private Genre genre;
     private Set<Review> reviews = new HashSet<>();
 
-
+    public Film(String name, Genre genre) {
+        this.name = name;
+        this.genre = genre;
+    }
 
     public Film(String name, Set<ActorDirector> actors, Genre genre, Set<Review> reviews) {
         this.name = name;
@@ -47,6 +50,7 @@ public class Film {
         this.releaseDay = releaseDay;
         this.county = county;
     }
+
 
     public Film(long id) {
         this.id = id;
@@ -110,7 +114,9 @@ public class Film {
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        int result = name.hashCode();
+        result = 31 * result + (genre != null ? genre.hashCode() : 0);
+        return result;
     }
 
     public long getId() {

@@ -14,10 +14,14 @@
     <title>Title</title>
 </head>
 <body>
-${requestScope.actor.firstName}
-${requestScope.actor.lastName}
+Имя : ${requestScope.actor.firstName}<br>
+Фамилия : ${requestScope.actor.lastName}<br>
+
+<p></p>
+Список фильмов :<br>
 <c:forEach items="${requestScope.actor.film}" var="film">
-    ${film.name}
+    Название фильма : ${film.name}${" "}<br> Жанр Фильма : ${film.genre}<br>
+    Роль в фильме : ${requestScope.actor.role}<br>
 </c:forEach>
 <%--Фильм Роль : ${actor.firstName}${" "}${actor.lastName}<br>--%>
 </body>

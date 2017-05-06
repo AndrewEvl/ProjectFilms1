@@ -23,6 +23,11 @@ public class Role {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return role;
+    }
+
     public long getId() {
         return id;
     }
