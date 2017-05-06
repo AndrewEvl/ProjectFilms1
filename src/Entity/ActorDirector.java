@@ -15,6 +15,7 @@ public class ActorDirector {
     private Set<Film> film = new HashSet<>();
     private Role role;
 
+
     public ActorDirector(String lastName, Role role) {
         this.lastName = lastName;
         this.role = role;
@@ -99,6 +100,32 @@ public class ActorDirector {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ActorDirector that = (ActorDirector) o;
+
+        if (id != that.id) return false;
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (birthdayDay != null ? !birthdayDay.equals(that.birthdayDay) : that.birthdayDay != null) return false;
+        if (film != null ? !film.equals(that.film) : that.film != null) return false;
+        return role != null ? role.equals(that.role) : that.role == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (birthdayDay != null ? birthdayDay.hashCode() : 0);
+        result = 31 * result + (film != null ? film.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "ActorDirector{" +
                 "id=" + id +
@@ -107,21 +134,6 @@ public class ActorDirector {
                 ", birthdayDay=" + birthdayDay +
                 ", film=" + film +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ActorDirector that = (ActorDirector) o;
-
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
     }
 
     public long getId() {

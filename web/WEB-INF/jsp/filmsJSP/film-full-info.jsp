@@ -14,12 +14,17 @@
     <title>Title</title>
 </head>
 <body>
-Название фильма : ${requestScope.info.name}
-Жанр : ${requestScope.info.genre}
-
-<c:forEach items="${requestScope.film.info}" var="films">
-    ${films.name}${" "}${films.actors}
-    ${films.reviews}${" "}${films.genre}
+Название фильма : ${requestScope.info.name}<br>
+Жанр : ${requestScope.info.genre}<br>
+<p></p>
+Съёмочная группа :<br><p>
+<c:forEach items="${requestScope.info.actors}" var="actors">
+    Имя : ${actors.firstName}${" "}${actors.lastName}${" "}<br> Роль : ${actors.role}<br></p>
+</c:forEach>
+<p></p>
+Отзавы :<br>
+<c:forEach items="${requestScope.info.reviews}" var="reviews">
+    Имя : ${reviews.user.nickName}<br>${reviews.text}<br>
 </c:forEach>
 </body>
 </html>

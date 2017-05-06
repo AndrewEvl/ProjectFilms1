@@ -29,12 +29,12 @@ CREATE TABLE user_review (user_id INT, review_id INT,film_id INT, PRIMARY KEY (u
   FOREIGN KEY (film_id) REFERENCES films(id));
 
 
-INSERT INTO genres (genres) VALUES ('Animation');
-INSERT INTO genres (genres) VALUES ('Horror');
-INSERT INTO genres (genres) VALUES ('Action');
-INSERT INTO genres (genres) VALUES ('Dram');
-INSERT INTO genres (genres) VALUES ('Comedy');
+INSERT INTO genres (genres) VALUES ('Мультфильм');
+INSERT INTO genres (genres) VALUES ('Ужасы');
+INSERT INTO genres (genres) VALUES ('Боевик');
+INSERT INTO genres (genres) VALUES ('Драмма');
+INSERT INTO genres (genres) VALUES ('Комедия');
 INSERT INTO users_role (role_user) VALUES ('Admin');
 INSERT INTO users_role (role_user) VALUES ('User');
-INSERT INTO role (role) VALUES ('Actor');
-INSERT INTO role (role) VALUES ('Director');
+INSERT INTO role (role) VALUES ('Актёр');
+INSERT INTO role (role) VALUES ('Режиссёр');
