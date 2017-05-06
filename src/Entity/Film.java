@@ -19,6 +19,12 @@ public class Film {
     private Set<Review> reviews = new HashSet<>();
     private Role role;
 
+    public Film(long id, String name, String county) {
+        this.id = id;
+        this.name = name;
+        this.county = county;
+    }
+
     public Film(long id, String name, Set<ActorDirector> actors, Set<ActorDirector> director, LocalDate releaseDay, String county, Genre genre, Set<Review> reviews, Role role) {
         this.id = id;
         this.name = name;
@@ -68,26 +74,6 @@ public class Film {
         this.name = name;
         this.releaseDay = releaseDay;
         this.county = county;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Film film = (Film) o;
-
-        if (!name.equals(film.name)) return false;
-        if (!genre.equals(film.genre)) return false;
-        return role.equals(film.role);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + genre.hashCode();
-        result = 31 * result + role.hashCode();
-        return result;
     }
 
     public Film(long id) {
@@ -213,5 +199,39 @@ public class Film {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Film film = (Film) o;
+
+        if (id != film.id) return false;
+        if (name != null ? !name.equals(film.name) : film.name != null) return false;
+        if (actors != null ? !actors.equals(film.actors) : film.actors != null) return false;
+        if (director != null ? !director.equals(film.director) : film.director != null) return false;
+        if (releaseDay != null ? !releaseDay.equals(film.releaseDay) : film.releaseDay != null) return false;
+        if (county != null ? !county.equals(film.county) : film.county != null) return false;
+        if (genre != null ? !genre.equals(film.genre) : film.genre != null) return false;
+        if (reviews != null ? !reviews.equals(film.reviews) : film.reviews != null) return false;
+        if (role != null ? !role.equals(film.role) : film.role != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (actors != null ? actors.hashCode() : 0);
+        result = 31 * result + (director != null ? director.hashCode() : 0);
+        result = 31 * result + (releaseDay != null ? releaseDay.hashCode() : 0);
+        result = 31 * result + (county != null ? county.hashCode() : 0);
+        result = 31 * result + (genre != null ? genre.hashCode() : 0);
+        result = 31 * result + (reviews != null ? reviews.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
     }
 }

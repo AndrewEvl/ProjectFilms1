@@ -16,7 +16,7 @@ import java.io.IOException;
 public class FilmsFullInfo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       req.setAttribute("film", FilmService.getInstance().listFilms(Long.parseLong(req.getParameter("id"))));
+       req.setAttribute("film", FilmService.getInstance().listFilms(Long.parseLong(req.getParameter("id"))).get());
        getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-full-info.jsp").forward(req, resp);
     }
 }

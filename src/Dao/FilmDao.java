@@ -26,7 +26,7 @@ public class FilmDao {
         return INSTANCE;
     }
 
-    public Optional<Film> save(Film film,long genreId,long actDirId, long roleId) {
+    public Optional<Film> save(Film film, long genreId, long actDirId, long roleId) {
         try (Connection connection = ConnectionManager.getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement preparedStatement = connection.prepareStatement
@@ -134,20 +134,22 @@ public class FilmDao {
     }
 
     public List<Film> allFilms() {
-        List<Film> films = new ArrayList<>();
+        List<Film> filmArrayList = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT * FROM films")) {
+                    ("SELECT id, name, relese_day, country FROM films")) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        films.add(new Film(resultSet.getString("films.name")));
+                        filmArrayList.add(new Film(resultSet.getLong("films.id"),
+                                resultSet.getString("films.name"),
+                                resultSet.getString("films.country")));
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return films;
+        return filmArrayList;
     }
 
     public List<Film> fullInfo() {
@@ -169,40 +171,38 @@ public class FilmDao {
         return films;
     }
 
-    public Optional<Film> listFilms (long id){
+    public Optional<Film> listFilms(long id) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
                     //, role.role, genres.genres, reviews.text, users.nick_name
-                    ("SELECT films.name,genres.genres, actors_directors.last_name, reviews.text FROM films " +
-                            "JOIN films_act_dir ON films.id = films_act_dir.film_id " +
-                            "JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +
-                            "JOIN genres ON films.genre_id = genres.id " +
-                            "LEFT JOIN user_review ON films.id = user_review.film_id " +
-                            "LEFT JOIN reviews ON user_review.review_id = reviews.id  WHERE films.id = ?;")) {
-                preparedStatement.setLong(1,id);
+                            ("SELECT films.name,genres.genres, actors_directors.last_name, reviews.text, users.nick_name FROM films " +
+                                    "JOIN films_act_dir ON films.id = films_act_dir.film_id " +
+                                    "JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +
+                                    "JOIN genres ON films.genre_id = genres.id " +
+                                    "LEFT JOIN user_review ON films.id = user_review.film_id " +
+                                    "LEFT JOIN reviews ON user_review.review_id = reviews.id " +
+                                    "LEFT JOIN users ON user_review.user_id = users.id  WHERE films.id = ?;")) {
+                preparedStatement.setLong(1, id);
 
-                Set<ActorDirector> actorsDirectors = new HashSet<>();
-                Set<Review> reviews = new HashSet<>();
+                Set<ActorDirector> actorDirectorHashSet = new HashSet<>();
+                Set<Review> reviewHashSet = new HashSet<>();
                 Film film = new Film();
 
-                try (ResultSet resultSet = preparedStatement.executeQuery()){
-                    while (resultSet.next()){
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
                         film.setName(resultSet.getString("films.name"));
-                        actorsDirectors.add(new ActorDirector(resultSet.getString("actors_directors.last_name")));
-                        film.setActors(actorsDirectors);
-                        reviews.add(new Review(resultSet.getString("reviews.text")));
-                        film.setReviews(reviews);
+                        actorDirectorHashSet.add(new ActorDirector(resultSet.getString("actors_directors.last_name")));
+                        film.setActors(actorDirectorHashSet);
+                        reviewHashSet.add(new Review(resultSet.getString("reviews.text")));
+                        film.setReviews(reviewHashSet);
                         Genre genre = new Genre(resultSet.getString("genres.genres"));
                         film.setGenre(genre);
                     }
-//                    if (resultSet.next()) {
-//                        Genre genre = new Genre(resultSet.getString("genres.genres"));
-//                        Optional.of(new Film(resultSet.getString("films.name"),
-//                                actorsDirectors,genre, reviews));
-                    return Optional.of(film);
+                    film.setActors(actorDirectorHashSet);
                 }
+                return Optional.of(film);
             }
-                 } catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return Optional.empty();

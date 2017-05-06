@@ -14,6 +14,7 @@
     <title>Title</title>
 </head>
 <body>
+
 <c:forEach items="${requestScope.film}" var="film">
     ${film.name}${" "}${film.actors}
     ${film.reviews}${" "}${film.genre}

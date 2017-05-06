@@ -4,6 +4,8 @@ import Entity.*;
 import connection.ConnectionManager;
 
 import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -73,6 +75,7 @@ public class ActorDirectorDao {
                         actorDirectors.add(new ActorDirector(resultSet.getLong("actors_directors.id"),
                                 resultSet.getString("actors_directors.first_name"),
                                 resultSet.getString("actors_directors.last_name")));
+                                //(resultSet.getObject("actors_directors.birthday")
                     }
                 }
             }
@@ -99,9 +102,7 @@ public class ActorDirectorDao {
                 Set<Film> filmHashSet = new HashSet<>();
                 ActorDirector actorDirector = new ActorDirector();
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
-
                     while (resultSet.next()) {
-
                         actorDirector.setFirstName(resultSet.getString("actors_directors.first_name"));
                         actorDirector.setLastName(resultSet.getString("actors_directors.last_name"));
                         filmHashSet.add(new Film(resultSet.getString("films.name"),
