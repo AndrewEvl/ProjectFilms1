@@ -4,6 +4,7 @@ import Dao.FilmDao;
 import Entity.Film;
 import Entity.Genre;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,16 +26,15 @@ public class FilmService {
         return INSTANCE;
     }
 
-    public Film addFilm (Film film, long genreId, long actDirId, long roleId){
-        FilmDao.getInstance().save(film,genreId,actDirId,roleId);
+    public Film addFilm(Film film, long genreId, long actDirId, long roleId) {
+        FilmDao.getInstance().save(film, genreId, actDirId, roleId);
         return film;
     }
 
-//    public Film yearFilm (Film film){
-//        FilmDao.getInstance().getByYear(film.getReleaseDay());
-//        return film;
-//    }
-//
+    public List<Film> yearFilm (LocalDate releaseDay) {
+       return FilmDao.getInstance().getByYear(releaseDay);
+    }
+
 //    public Film idFilm (Film film){
 //        FilmDao.getInstance().getById(film.getId());
 //        return film;
@@ -52,12 +52,11 @@ public class FilmService {
 //    public List<Film> fullInfoFilm(){
 //        return FilmDao.getInstance().allFilms();
 //    }
-
-    public List<Film> allFilms () {
+    public List<Film> allFilms() {
         return FilmDao.getInstance().allFilms();
     }
 
-    public Optional<Film> fullFilmInfo(long id){
+    public Optional<Film> fullFilmInfo(long id) {
         return FilmDao.getInstance().listFilms(id);
     }
 }

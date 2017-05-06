@@ -22,7 +22,7 @@
     Имя : ${actors.firstName}${" "}${actors.lastName}${" "}<br> Роль : ${actors.role}<br></p>
 </c:forEach>
 <p></p>
-Отзавы :<br>
+Отзовы :<br>
 <c:forEach items="${requestScope.info.reviews}" var="reviews">
     Имя : ${reviews.user.nickName}<br>${reviews.text}<br>
 </c:forEach>

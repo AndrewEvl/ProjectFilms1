@@ -78,41 +78,24 @@ public class FilmDao {
 //        return Optional.empty();
 //    }
 
-//    public Optional<Film> getByName(String name) {
-//        try (Connection connection = ConnectionManager.getConnection()) {
-//            try (PreparedStatement preparedStatement = connection.prepareStatement
-//                    ("SELECT * FROM films WHERE name = ?")) {
-//                preparedStatement.setString(1, name);
-//                ResultSet resultSet = preparedStatement.executeQuery();
-//                Film film = new Film(name);
-//                while (resultSet.next()) {
-//                    film.setName(resultSet.getString("name"));
-//                }
-//                return Optional.of(film);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return Optional.empty();
-//    }
-
-//    public Optional<Film> getByYear(LocalDate releaseDay) {
-//        try (Connection connection = ConnectionManager.getConnection()) {
-//            try (PreparedStatement preparedStatement = connection.prepareStatement
-//                    ("SELECT  * FROM  films WHERE YEAR(relese_day) = ?")) {
-//                preparedStatement.setObject(1, releaseDay.getYear());
-//                ResultSet resultSet = preparedStatement.executeQuery();
-//                Film film = new Film(releaseDay);
-//                while (resultSet.next()) {
-//                    film.setName(resultSet.getString("film_name"));
-//                }
-//                return Optional.of(film);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return Optional.empty();
-//    }
+    public List<Film> getByYear(LocalDate releaseDay) {
+        List<Film> yearFilms = new ArrayList<>();
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT  * FROM  films WHERE YEAR(relese_day) = ?")) {
+                preparedStatement.setObject(1, releaseDay.getYear());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    yearFilms.add(new Film(resultSet.getLong("films.id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("country")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return yearFilms;
+    }
 
     public List<Genre> findAllGenre() {
         List<Genre> genre = new ArrayList<>();
@@ -192,7 +175,7 @@ public class FilmDao {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
                         film.setName(resultSet.getString("films.name"));
-                        actorDirectorHashSet.add(new ActorDirector(resultSet.getString("actors_directors.first_name"),resultSet.getString("actors_directors.last_name"), new Role(resultSet.getString("role.role"))));
+                        actorDirectorHashSet.add(new ActorDirector(resultSet.getString("actors_directors.first_name"), resultSet.getString("actors_directors.last_name"), new Role(resultSet.getString("role.role"))));
                         film.setActors(actorDirectorHashSet);
                         reviewHashSet.add(new Review(new User(resultSet.getString("users.nick_name")), resultSet.getString("reviews.text")));
                         film.setReviews(reviewHashSet);

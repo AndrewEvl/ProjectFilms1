@@ -1,5 +1,6 @@
 package servlet.filmsServlet;
 
+import Entity.Film;
 import Service.FilmService;
 
 import javax.servlet.RequestDispatcher;

@@ -14,10 +14,6 @@
 <form action="${pageContext.request.contextPath}/reviewadd" method="post">
     <label for="review">Review</label>
     <input type="text" name="review"><br>
-    <label for="mark">mark</label>
-    <input type="text" name="mark"><br>
-    <label for="userId">userId</label>
-    <input type="text" name="userId"><br>
     <label for="filmId">filmId</label>
     <input type="text" name="filmId"><br>
     <button type="submit">Save</button>
