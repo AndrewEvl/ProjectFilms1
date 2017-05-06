@@ -17,6 +17,25 @@ public class Film {
     private String county;
     private Genre genre;
     private Set<Review> reviews = new HashSet<>();
+    private Role role;
+
+    public Film(long id, String name, Set<ActorDirector> actors, Set<ActorDirector> director, LocalDate releaseDay, String county, Genre genre, Set<Review> reviews, Role role) {
+        this.id = id;
+        this.name = name;
+        this.actors = actors;
+        this.director = director;
+        this.releaseDay = releaseDay;
+        this.county = county;
+        this.genre = genre;
+        this.reviews = reviews;
+        this.role = role;
+    }
+
+    public Film(String name, Genre genre, Role role) {
+        this.name = name;
+        this.genre = genre;
+        this.role = role;
+    }
 
     public Film(String name, Genre genre) {
         this.name = name;
@@ -51,6 +70,25 @@ public class Film {
         this.county = county;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Film film = (Film) o;
+
+        if (!name.equals(film.name)) return false;
+        if (!genre.equals(film.genre)) return false;
+        return role.equals(film.role);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + genre.hashCode();
+        result = 31 * result + role.hashCode();
+        return result;
+    }
 
     public Film(long id) {
         this.id = id;
@@ -99,24 +137,10 @@ public class Film {
                 ", director=" + director +
                 ", releaseDay=" + releaseDay +
                 ", county='" + county + '\'' +
-                ", genre='" + genre + '\'' +
+                ", genre=" + genre +
                 ", reviews=" + reviews +
+                ", role=" + role +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Film film = (Film) o;
-        return id == film.id;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + (genre != null ? genre.hashCode() : 0);
-        return result;
     }
 
     public long getId() {
@@ -183,5 +207,11 @@ public class Film {
         this.reviews = reviews;
     }
 
+    public Role getRole() {
+        return role;
+    }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
