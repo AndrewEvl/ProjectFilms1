@@ -14,10 +14,12 @@
     <title>Title</title>
 </head>
 <body>
+Название фильма : ${requestScope.info.name}
+Жанр : ${requestScope.info.genre}
 
-<c:forEach items="${requestScope.film}" var="film">
-    ${film.name}${" "}${film.actors}
-    ${film.reviews}${" "}${film.genre}
+<c:forEach items="${requestScope.film.info}" var="films">
+    ${films.name}${" "}${films.actors}
+    ${films.reviews}${" "}${films.genre}
 </c:forEach>
 </body>
 </html>

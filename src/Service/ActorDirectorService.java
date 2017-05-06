@@ -38,9 +38,9 @@ public class ActorDirectorService {
         return UserDao.getInstance().findAllRole();
     }
 
-    public Optional<ActorDirector> fullInfoActors (long id){
-       return ActorDirectorDao.getInstance().findById(id);
-    }
+//    public Optional<ActorDirector> fullInfoActors (long id){
+//       return ActorDirectorDao.getInstance().findById(id);
+//    }
 
     public Optional<ActorDirector> actDirInfo(long id) {
         return ActorDirectorDao.getInstance().listActorDirector(id);

@@ -62,57 +62,57 @@ public class FilmDao {
         return Optional.empty();
     }
 
-    public Optional<Film> getById(long id) {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM films WHERE id = ?")) {
-                preparedStatement.setLong(1, id);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    return Optional.of(new Film(id, resultSet.getString("name")));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
+//    public Optional<Film> getById(long id) {
+//        try (Connection connection = ConnectionManager.getConnection()) {
+//            try (PreparedStatement preparedStatement = connection.prepareStatement(
+//                    "SELECT * FROM films WHERE id = ?")) {
+//                preparedStatement.setLong(1, id);
+//                ResultSet resultSet = preparedStatement.executeQuery();
+//                if (resultSet.next()) {
+//                    return Optional.of(new Film(id, resultSet.getString("name")));
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return Optional.empty();
+//    }
 
-    public Optional<Film> getByName(String name) {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT * FROM films WHERE name = ?")) {
-                preparedStatement.setString(1, name);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                Film film = new Film(name);
-                while (resultSet.next()) {
-                    film.setName(resultSet.getString("name"));
-                }
-                return Optional.of(film);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
+//    public Optional<Film> getByName(String name) {
+//        try (Connection connection = ConnectionManager.getConnection()) {
+//            try (PreparedStatement preparedStatement = connection.prepareStatement
+//                    ("SELECT * FROM films WHERE name = ?")) {
+//                preparedStatement.setString(1, name);
+//                ResultSet resultSet = preparedStatement.executeQuery();
+//                Film film = new Film(name);
+//                while (resultSet.next()) {
+//                    film.setName(resultSet.getString("name"));
+//                }
+//                return Optional.of(film);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return Optional.empty();
+//    }
 
-    public Optional<Film> getByYear(LocalDate releaseDay) {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT  * FROM  films WHERE YEAR(relese_day) = ?")) {
-                preparedStatement.setObject(1, releaseDay.getYear());
-                ResultSet resultSet = preparedStatement.executeQuery();
-                Film film = new Film(releaseDay);
-                while (resultSet.next()) {
-                    film.setName(resultSet.getString("film_name"));
-                }
-                return Optional.of(film);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
+//    public Optional<Film> getByYear(LocalDate releaseDay) {
+//        try (Connection connection = ConnectionManager.getConnection()) {
+//            try (PreparedStatement preparedStatement = connection.prepareStatement
+//                    ("SELECT  * FROM  films WHERE YEAR(relese_day) = ?")) {
+//                preparedStatement.setObject(1, releaseDay.getYear());
+//                ResultSet resultSet = preparedStatement.executeQuery();
+//                Film film = new Film(releaseDay);
+//                while (resultSet.next()) {
+//                    film.setName(resultSet.getString("film_name"));
+//                }
+//                return Optional.of(film);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return Optional.empty();
+//    }
 
     public List<Genre> findAllGenre() {
         List<Genre> genre = new ArrayList<>();
@@ -137,7 +137,7 @@ public class FilmDao {
         List<Film> filmArrayList = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT id, name, relese_day, country FROM films")) {
+                    ("SELECT * FROM films")) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
                         filmArrayList.add(new Film(resultSet.getLong("films.id"),
@@ -151,25 +151,25 @@ public class FilmDao {
         }
         return filmArrayList;
     }
-
-    public List<Film> fullInfo() {
-        List<Film> films = new ArrayList<>();
-        try (Connection connection = ConnectionManager.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT name, relese_day, country, genres.genres FROM films JOIN genres ON films.genre_id = genres.id")) {
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    films.add(new Film(resultSet.getString("films.name"),
-                            resultSet.getDate("films.relese_day"),
-                            resultSet.getString("films.country"),
-                            resultSet.getString("films.genre")));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return films;
-    }
+//
+//    public List<Film> fullInfo() {
+//        List<Film> films = new ArrayList<>();
+//        try (Connection connection = ConnectionManager.getConnection()) {
+//            try (PreparedStatement preparedStatement = connection.prepareStatement
+//                    ("SELECT name, relese_day, country, genres.genres FROM films JOIN genres ON films.genre_id = genres.id")) {
+//                ResultSet resultSet = preparedStatement.executeQuery();
+//                while (resultSet.next()) {
+//                    films.add(new Film(resultSet.getString("films.name"),
+//                            resultSet.getDate("films.relese_day"),
+//                            resultSet.getString("films.country"),
+//                            resultSet.getString("films.genre")));
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return films;
+//    }
 
     public Optional<Film> listFilms(long id) {
         try (Connection connection = ConnectionManager.getConnection()) {

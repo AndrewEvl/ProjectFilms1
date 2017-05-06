@@ -49,22 +49,6 @@ public class ActorDirectorDao {
         return Optional.empty();
     }
 
-    public Optional<Role> getId(String role) {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT * FROM role WHERE role = ?")) {
-                preparedStatement.setString(1, role);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    return Optional.of(new Role(resultSet.getLong("id"), role));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
     public List<ActorDirector> getActDir() {
         List<ActorDirector> actorDirectors = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {

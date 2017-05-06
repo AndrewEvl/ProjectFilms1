@@ -23,6 +23,5 @@
     Название фильма : ${film.name}${" "}<br> Жанр Фильма : ${film.genre}<br>
     Роль в фильме : ${film.role}<br>
 </c:forEach>
-<%--Фильм Роль : ${actor.firstName}${" "}${actor.lastName}<br>--%>
 </body>
 </html>
