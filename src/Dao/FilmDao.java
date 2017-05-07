@@ -5,7 +5,9 @@ import connection.ConnectionManager;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created by User on 08.04.2017.
@@ -113,7 +115,25 @@ public class FilmDao {
             e.printStackTrace();
         }
         return genre;
+    }
 
+    public List<Film> downlonFileFilm () {
+        List<Film> downlodFilmList = new ArrayList<>();
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT name, country, relese_day, genres.genres FROM films " +
+                            "JOIN genres ON films.genre_id = genres.id")) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()){
+                    while (resultSet.next()){
+                        downlodFilmList.add(new Film(resultSet.getString("name"),
+                                resultSet.getString("country")));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return downlodFilmList;
     }
 
     public List<Film> allFilms() {
@@ -134,30 +154,10 @@ public class FilmDao {
         }
         return filmArrayList;
     }
-//
-//    public List<Film> fullInfo() {
-//        List<Film> films = new ArrayList<>();
-//        try (Connection connection = ConnectionManager.getConnection()) {
-//            try (PreparedStatement preparedStatement = connection.prepareStatement
-//                    ("SELECT name, relese_day, country, genres.genres FROM films JOIN genres ON films.genre_id = genres.id")) {
-//                ResultSet resultSet = preparedStatement.executeQuery();
-//                while (resultSet.next()) {
-//                    films.add(new Film(resultSet.getString("films.name"),
-//                            resultSet.getDate("films.relese_day"),
-//                            resultSet.getString("films.country"),
-//                            resultSet.getString("films.genre")));
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return films;
-//    }
 
     public Optional<Film> listFilms(long id) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    //, role.role, genres.genres, reviews.text, users.nick_name
                             ("SELECT films.name,genres.genres, actors_directors.last_name, actors_directors.first_name, role.role, reviews.text, users.nick_name FROM films " +
                                     "JOIN films_act_dir ON films.id = films_act_dir.film_id " +
                                     "JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +

@@ -35,28 +35,19 @@ public class FilmService {
        return FilmDao.getInstance().getByYear(releaseDay);
     }
 
-//    public Film idFilm (Film film){
-//        FilmDao.getInstance().getById(film.getId());
-//        return film;
-//    }
-//
-//    public Film nameFilm (Film film) {
-//        FilmDao.getInstance().getByName(film.getName());
-//        return film;
-//    }
-
     public List<Genre> fullGenres() {
         return FilmDao.getInstance().findAllGenre();
     }
 
-//    public List<Film> fullInfoFilm(){
-//        return FilmDao.getInstance().allFilms();
-//    }
     public List<Film> allFilms() {
         return FilmDao.getInstance().allFilms();
     }
 
     public Optional<Film> fullFilmInfo(long id) {
         return FilmDao.getInstance().listFilms(id);
+    }
+
+    public List<Film> downlodFile (){
+        return FilmDao.getInstance().downlonFileFilm();
     }
 }

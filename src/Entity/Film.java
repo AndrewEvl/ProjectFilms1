@@ -19,6 +19,12 @@ public class Film {
     private Set<Review> reviews = new HashSet<>();
     private Role role;
 
+    public Film(String name, String county, Genre genre) {
+        this.name = name;
+        this.county = county;
+        this.genre = genre;
+    }
+
     public Film(long id, String name, String county) {
         this.id = id;
         this.name = name;
