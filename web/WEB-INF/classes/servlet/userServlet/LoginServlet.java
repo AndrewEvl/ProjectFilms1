@@ -17,7 +17,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("????").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -31,6 +31,6 @@ public class LoginServlet extends HttpServlet {
         UserService.getInstance().loginUser(new User(password,userName));
         //if ()
         req.getSession().setAttribute("userLoggedIn",true);
-        resp.sendRedirect("???");
+        resp.sendRedirect("/");
     }
 }
