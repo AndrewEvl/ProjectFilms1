@@ -59,7 +59,7 @@ public class ActorDirectorDao {
                         actorDirectors.add(new ActorDirector(resultSet.getLong("actors_directors.id"),
                                 resultSet.getString("actors_directors.first_name"),
                                 resultSet.getString("actors_directors.last_name")));
-                                //(resultSet.getObject("actors_directors.birthday")
+                               // resultSet.getObject("actors_directors.birthday",LocalDate.class()
                     }
                 }
             }

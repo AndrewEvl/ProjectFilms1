@@ -96,7 +96,7 @@ public class UserDao {
             try (PreparedStatement preparedStatement = connection.prepareStatement
                     ("SELECT mail, users.password, users_role.role_user FROM users " +
                             "JOIN user_role_user ON users.id = user_role_user.users_id " +
-                            "JOIN users_role ON user_role_user.users_role_id = users_role.id WHERE users.mail = ?")) {
+                            "JOIN users_role ON user_role_user.users_role_id = users_role.id WHERE users.password = ?")) {
                 preparedStatement.setString(1, "users.mail");
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()){
