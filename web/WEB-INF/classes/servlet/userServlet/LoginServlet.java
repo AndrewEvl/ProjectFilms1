@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet {
             req.getSession().setAttribute("userNickName",nickName);
             User user = UserDao.getInstance().userinfo(nickName, password);
             req.getSession().setAttribute("userRole",user.getRole());
+            req.getSession().setAttribute("userId",user.getId());
             resp.sendRedirect("/");
         }
     }

@@ -42,12 +42,5 @@ public class FilmSave extends HttpServlet {
                 .getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-success.jsp");
         FilmService.getInstance().addFilm(new Film(name,releaseDay,country),genreId, actDirIdFirst, directorRole);
         requestDispatcher.forward(req, resp);
-        System.out.println(name);
-        System.out.println(releaseDay);
-        System.out.println(country);
-        System.out.println(genreId);
-        System.out.println(" ");
-        System.out.println(directorRole);
-        System.out.println(actDirIdFirst);
     }
 }

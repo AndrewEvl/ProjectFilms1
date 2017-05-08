@@ -125,7 +125,7 @@ public class UserDao {
         User userInfo = new User();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT users.nick_name, users.password, users_role.role_user FROM users " +
+                    ("SELECT users.id, users.nick_name, users.password, users_role.role_user FROM users " +
                             "JOIN user_role_user ON users.id = user_role_user.users_id " +
                             "JOIN users_role ON user_role_user.users_role_id = users_role.id " +
                             "WHERE users.nick_name = ? AND users.password = ?")) {
@@ -134,6 +134,7 @@ public class UserDao {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
                     if (resultSet.next()) {
+                        userInfo.setId(resultSet.getLong("users.id"));
                         userInfo.setNickName(resultSet.getString("nick_name"));
                         userInfo.setPassword(resultSet.getString("password"));
                         userInfo.setRole(resultSet.getString("users_role.role_user"));

@@ -1,6 +1,7 @@
 package Dao;
 
 import Entity.Review;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -30,20 +31,26 @@ public class ReviewsDao {
 
     public Optional<Review> save(Review review) {
         try (Connection connection = ConnectionManager.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement
-                    ("INSERT INTO reviews (text, mark, film_id, user_id) VALUES (?, ?, ?, ?)"
-                            , Statement.RETURN_GENERATED_KEYS);
-            {
+            connection.setAutoCommit(false);
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("INSERT INTO reviews (text) VALUES (?)"
+                            , Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, review.getText());
-                preparedStatement.setDouble(2, review.getMark());
-                preparedStatement.setLong(3, review.getFilm().getId());
-                preparedStatement.setLong(4, review.getUser().getId());
                 preparedStatement.executeUpdate();
             }
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("INSERT INTO user_review (user_id, review_id, film_id) VALUE (?, ?, ?)")) {
+                preparedStatement.setLong(2, review.getId());
+                preparedStatement.setLong(3, review.getFilm().getId());
+                preparedStatement.setLong(1, review.getUser().getId());
+                preparedStatement.executeUpdate();
+            }
+            connection.commit();
+            return Optional.of(review);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     public Optional<Review> addReview(Review review) {

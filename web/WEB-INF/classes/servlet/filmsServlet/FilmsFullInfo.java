@@ -1,7 +1,12 @@
 package servlet.filmsServlet;
 
+import Entity.Film;
+import Entity.Review;
+import Entity.User;
 import Service.FilmService;
+import Service.ReviewService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +23,16 @@ public class FilmsFullInfo extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        req.setAttribute("info", FilmService.getInstance().fullFilmInfo(Long.parseLong((req.getParameter("id")))).get());
        getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-full-info.jsp").forward(req, resp);
-//        "/WEB-INF/jsp/filmsJSP/film-full-info.jsp"
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String review = req.getParameter("review");
+
+
+        RequestDispatcher requestDispatcher = getServletContext()
+                .getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-full-info.jsp");
+        requestDispatcher.forward(req, resp);
     }
 }

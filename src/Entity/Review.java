@@ -6,10 +6,22 @@ package Entity;
 public class Review {
     private long id;
     private Film film;
+    private long filmId;
     private User user;
     private String text;
     private double mark;
 
+    public Review(long filmId, User user, String text) {
+        this.filmId = filmId;
+        this.user = user;
+        this.text = text;
+    }
+
+    public Review(Film film, User user, String text) {
+        this.film = film;
+        this.user = user;
+        this.text = text;
+    }
 
     public Review(User user, String text) {
         this.user = user;
@@ -45,6 +57,7 @@ public class Review {
         return "Review{" +
                 "id=" + id +
                 ", film=" + film +
+                ", filmId=" + filmId +
                 ", user=" + user +
                 ", text='" + text + '\'' +
                 ", mark=" + mark +
@@ -100,6 +113,14 @@ public class Review {
 
     public double getMark() {
         return mark;
+    }
+
+    public long getFilmId() {
+        return filmId;
+    }
+
+    public void setFilmId(long filmId) {
+        this.filmId = filmId;
     }
 
     public void setMark(double mark) {

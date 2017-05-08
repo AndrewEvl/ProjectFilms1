@@ -20,10 +20,6 @@ public class ReviewService {
         }
         return INSTANCE;
     }
-    public Review addReview (Review review){
-        ReviewsDao.getInstance().save(review);
-        return review;
-    }
 
     public Review saveReview (Review review){
         ReviewsDao.getInstance().addReview(review);

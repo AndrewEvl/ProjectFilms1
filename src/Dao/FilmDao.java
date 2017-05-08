@@ -5,9 +5,7 @@ import connection.ConnectionManager;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.*;
-import java.util.Date;
 
 /**
  * Created by User on 08.04.2017.
@@ -158,7 +156,7 @@ public class FilmDao {
     public Optional<Film> listFilms(long id) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                            ("SELECT films.name,genres.genres,films.relese_day, actors_directors.birthday, actors_directors.last_name, actors_directors.first_name, role.role, reviews.text, users.nick_name FROM films " +
+                            ("SELECT films.id, films.name,genres.genres,films.relese_day, actors_directors.birthday, actors_directors.last_name, actors_directors.first_name, role.role, reviews.text, users.nick_name FROM films " +
                                     "JOIN films_act_dir ON films.id = films_act_dir.film_id " +
                                     "JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +
                                     "JOIN genres ON films.genre_id = genres.id " +
@@ -174,6 +172,7 @@ public class FilmDao {
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
+                        film.setId(resultSet.getLong("films.id"));
                         film.setName(resultSet.getString("films.name"));
                         actorDirectorHashSet.add(new ActorDirector(resultSet.getString("actors_directors.first_name"),
                                 resultSet.getString("actors_directors.last_name"),
