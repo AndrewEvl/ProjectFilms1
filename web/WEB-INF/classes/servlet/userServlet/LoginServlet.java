@@ -28,11 +28,16 @@ public class LoginServlet extends HttpServlet {
 
         if (nickName.isEmpty() || password.isEmpty()) {
             doGet(req, resp);
-            return;}
-//        } else (nickName.equals() || password.equals());
-        UserService.getInstance().loginUser(new User(password, nickName));
-        //if ()
-        req.getSession().setAttribute("userLoggedIn", true);
-        resp.sendRedirect("/");
+            return;
+        }
+        if (!UserService.getInstance().loginUser(new User(nickName, password))) {
+            doGet(req, resp);
+            return;
+        }
+        if (UserService.getInstance().loginUser(new User(nickName, password))) {
+            req.getSession().setAttribute("userNickName",UserService.getInstance().loginIfoUser(new User(nickName, password)).getNickName());
+            req.getSession().setAttribute("userRole",UserService.getInstance().loginIfoUser(new User(nickName, password)).getRole());
+            resp.sendRedirect("/");
+        }
     }
 }

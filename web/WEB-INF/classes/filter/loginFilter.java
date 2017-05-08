@@ -21,7 +21,7 @@ public class loginFilter implements Filter{
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if(servletRequest instanceof HttpServletRequest){
             HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-            Object inLogin = httpServletRequest.getSession().getAttribute("userLoggedIn");
+            Object inLogin = httpServletRequest.getSession().getAttribute("userNickName");
             if (inLogin == null && !httpServletRequest.getRequestURI().contains("/login")) {
                 ((HttpServletResponse)servletResponse).sendRedirect("/login");
             }else {

@@ -18,6 +18,29 @@ public class User {
     private Set<Review> reviews = new HashSet<>();
     private String role;
 
+    public User(String nickName, String password, String role) {
+        this.nickName = nickName;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(long id, String firstName, String lastName, String nickName, LocalDate birthdayDay, String password, String mail, Set<Review> reviews, String role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nickName = nickName;
+        this.birthdayDay = birthdayDay;
+        this.password = password;
+        this.mail = mail;
+        this.reviews = reviews;
+        this.role = role;
+    }
+
+    public User(String nickName, String password) {
+        this.nickName = nickName;
+        this.password = password;
+    }
+
     public User(String nickName, Set<Review> reviews) {
         this.nickName = nickName;
         this.reviews = reviews;
@@ -25,17 +48,6 @@ public class User {
 
     public User(String nickName) {
         this.nickName = nickName;
-    }
-
-    public User(String password, String mail) {
-        this.password = password;
-        this.mail = mail;
-    }
-
-    public User(String password, String mail, String role) {
-        this.password = password;
-        this.mail = mail;
-        this.role = role;
     }
 
     public User() {
@@ -96,6 +108,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", mail='" + mail + '\'' +
                 ", reviews=" + reviews +
+                ", role='" + role + '\'' +
                 '}';
     }
 

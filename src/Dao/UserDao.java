@@ -30,7 +30,7 @@ public class UserDao {
 
     public Optional<User> save(User user) {
         try (Connection connection = ConnectionManager.getConnection()) {
-            //connection.setAutoCommit(false);
+            connection.setAutoCommit(false);
             try (PreparedStatement preparedStatement = connection.prepareStatement
                     ("INSERT INTO users (first_name, last_name, nick_name, birthday, password, mail) " +
                             " VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
@@ -46,6 +46,12 @@ public class UserDao {
                     user.setId(generatedKeys.getLong(1));
                 }
             }
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("INSERT INTO user_role_user (users_id, users_role_id) VALUE (?,?)")) {
+                preparedStatement.setLong(1, user.getId());
+                preparedStatement.setLong(2, 2);
+            }
+            connection.commit();
             return Optional.of(user);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,28 +96,52 @@ public class UserDao {
         return role;
     }
 
-    public List<User> findAllUsers(User user) {
-        List<User> users = new ArrayList<>();
+    public boolean findAllUsers(User user) {
+        User users = new User();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
                     ("SELECT users.nick_name, users.password, users_role.role_user FROM users " +
                             "JOIN user_role_user ON users.id = user_role_user.users_id " +
                             "JOIN users_role ON user_role_user.users_role_id = users_role.id " +
                             "WHERE users.nick_name = ? AND users.password = ?")) {
-                preparedStatement.setString(2, "users.nick_name");
-                preparedStatement.setString(1, "users.password");
+                preparedStatement.setString(1, user.getNickName());
+                preparedStatement.setString(2, user.getPassword());
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        users.add(new User(resultSet.getString("users.mail"),
-                                resultSet.getString("users.password"),
-                                resultSet.getString("users_role.role_user")));
-                    }
+                    if (resultSet.next())
+                        users.setNickName(resultSet.getString("nick_name"));
+                    users.setPassword(resultSet.getString("password"));
+                    users.setRole(resultSet.getString("users_role.role_user"));
+                    return true;
                 }
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return users;
+        return false;
+    }
+
+    public Optional<User> userinfo(User user) {
+        User users = new User();
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement
+                    ("SELECT users.nick_name, users.password, users_role.role_user FROM users " +
+                            "JOIN user_role_user ON users.id = user_role_user.users_id " +
+                            "JOIN users_role ON user_role_user.users_role_id = users_role.id " +
+                            "WHERE users.nick_name = ? AND users.password = ?")) {
+                preparedStatement.setString(1, user.getNickName());
+                preparedStatement.setString(2, user.getPassword());
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        users.setNickName(resultSet.getString("nick_name"));
+                        users.setPassword(resultSet.getString("password"));
+                        users.setRole(resultSet.getString("users_role.role_user"));
+                    }
+                }
+                return Optional.of(users);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }
