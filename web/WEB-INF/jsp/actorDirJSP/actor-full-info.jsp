@@ -16,6 +16,7 @@
 <body>
 Имя : ${requestScope.actor.firstName}<br>
 Фамилия : ${requestScope.actor.lastName}<br>
+Дата рождения : ${requestScope.actor.birthday}<br>
 
 <p></p>
 Список фильмов :<br>

@@ -22,15 +22,17 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userName = req.getParameter("username");
+
+        String nickName = req.getParameter("username");
         String password = req.getParameter("password");
-        if (userName.isEmpty() || password.isEmpty()){
+
+        if (nickName.isEmpty() || password.isEmpty()) {
             doGet(req, resp);
-            return;
-        }
-        UserService.getInstance().loginUser(new User(password,userName));
+            return;}
+//        } else (nickName.equals() || password.equals());
+        UserService.getInstance().loginUser(new User(password, nickName));
         //if ()
-        req.getSession().setAttribute("userLoggedIn",true);
+        req.getSession().setAttribute("userLoggedIn", true);
         resp.sendRedirect("/");
     }
 }

@@ -11,10 +11,9 @@ public class ActorDirector {
     private long id;
     private String firstName;
     private String lastName;
-    private LocalDate birthdayDay;
+    private LocalDate birthday;
     private Set<Film> film = new HashSet<>();
     private Role role;
-
 
     public ActorDirector(String lastName, Role role) {
         this.lastName = lastName;
@@ -41,10 +40,10 @@ public class ActorDirector {
         this.role = role;
     }
 
-    public ActorDirector(String firstName, String lastName, LocalDate birthdayDay, Set<Film> film, Role role) {
+    public ActorDirector(String firstName, String lastName, LocalDate birthday, Set<Film> film, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdayDay = birthdayDay;
+        this.birthday = birthday;
         this.film = film;
         this.role = role;
     }
@@ -60,30 +59,30 @@ public class ActorDirector {
         this.lastName = lastName;
     }
 
-    public ActorDirector(long id, String firstName, String lastName, LocalDate birthdayDay) {
+    public ActorDirector(long id, String firstName, String lastName, LocalDate birthday) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdayDay = birthdayDay;
+        this.birthday = birthday;
     }
 
-    public ActorDirector(String firstName, String lastName, LocalDate birthdayDay) {
+    public ActorDirector(String firstName, String lastName, LocalDate birthday) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdayDay = birthdayDay;
+        this.birthday = birthday;
     }
 
-    public ActorDirector(String firstName, String lastName, LocalDate birthdayDay, Role role) {
+    public ActorDirector(String firstName, String lastName, LocalDate birthday, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdayDay = birthdayDay;
+        this.birthday = birthday;
         this.role = role;
     }
 
-    public ActorDirector(String firstName, String lastName, LocalDate birthdayDay, Set<Film> film) {
+    public ActorDirector(String firstName, String lastName, LocalDate birthday, Set<Film> film) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdayDay = birthdayDay;
+        this.birthday = birthday;
         this.film = film;
     }
 
@@ -91,11 +90,11 @@ public class ActorDirector {
         this.id = id;
     }
 
-    public ActorDirector(long id, String firstName, String lastName, LocalDate birthdayDay, Set<Film> film) {
+    public ActorDirector(long id, String firstName, String lastName, LocalDate birthday, Set<Film> film) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdayDay = birthdayDay;
+        this.birthday = birthday;
         this.film = film;
     }
 
@@ -109,7 +108,7 @@ public class ActorDirector {
         if (id != that.id) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (birthdayDay != null ? !birthdayDay.equals(that.birthdayDay) : that.birthdayDay != null) return false;
+        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
         if (film != null ? !film.equals(that.film) : that.film != null) return false;
         return role != null ? role.equals(that.role) : that.role == null;
     }
@@ -119,7 +118,7 @@ public class ActorDirector {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (birthdayDay != null ? birthdayDay.hashCode() : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (film != null ? film.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
@@ -131,7 +130,7 @@ public class ActorDirector {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", birthdayDay=" + birthdayDay +
+                ", birthday=" + birthday +
                 ", film=" + film +
                 '}';
     }
@@ -160,12 +159,12 @@ public class ActorDirector {
         this.lastName = lastName;
     }
 
-    public LocalDate getBirthdayDay() {
-        return birthdayDay;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
-    public void setBirthdayDay (LocalDate birthdayDay) {
-        this.birthdayDay = birthdayDay;
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public Set<Film> getFilm() {

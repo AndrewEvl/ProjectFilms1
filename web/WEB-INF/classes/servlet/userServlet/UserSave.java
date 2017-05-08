@@ -37,11 +37,5 @@ public class UserSave extends HttpServlet {
                 getServletContext().getRequestDispatcher("/WEB-INF/jsp/userJSP/" + jspName);
         UserService.getInstance().addUser(new User(firstName, lastName, nickName, birthday, password, mail));
         requestDispatcher.forward(req, resp);
-        System.out.println(firstName);
-        System.out.println(lastName);
-        System.out.println(nickName);
-        System.out.println(birthday);
-        System.out.println(password);
-        System.out.println(mail);
     }
 }

@@ -16,10 +16,11 @@
 <body>
 Название фильма : ${requestScope.info.name}<br>
 Жанр : ${requestScope.info.genre}<br>
+Дата выхода : ${requestScope.info.releaseDay}
 <p></p>
 Съёмочная группа :<br><p>
 <c:forEach items="${requestScope.info.actors}" var="actors">
-    Имя : ${actors.firstName}${" "}${actors.lastName}${" "}<br> Роль : ${actors.role}<br></p>
+    Имя : ${actors.firstName}${" "}${actors.lastName}${" "}<br> Дата рождения :${actors.birthday}${" "}<br> Роль : ${actors.role}<br></p>
 </c:forEach>
 <p></p>
 Отзовы :<br>

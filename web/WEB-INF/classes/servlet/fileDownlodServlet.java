@@ -17,6 +17,6 @@ public class fileDownlodServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setHeader("Content-disposition", "attachment; filename=report.txt");
-        resp.getWriter().write(String.valueOf(FilmService.getInstance().downlodFile()));
+        resp.getWriter().write((FilmService.getInstance().downlodFile().toString()));
     }
 }

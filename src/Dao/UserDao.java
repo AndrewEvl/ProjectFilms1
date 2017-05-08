@@ -94,12 +94,14 @@ public class UserDao {
         List<User> users = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT mail, users.password, users_role.role_user FROM users " +
+                    ("SELECT users.nick_name, users.password, users_role.role_user FROM users " +
                             "JOIN user_role_user ON users.id = user_role_user.users_id " +
-                            "JOIN users_role ON user_role_user.users_role_id = users_role.id WHERE users.password = ?")) {
-                preparedStatement.setString(1, "users.mail");
+                            "JOIN users_role ON user_role_user.users_role_id = users_role.id " +
+                            "WHERE users.nick_name = ? AND users.password = ?")) {
+                preparedStatement.setString(2, "users.nick_name");
+                preparedStatement.setString(1, "users.password");
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()){
+                    while (resultSet.next()) {
                         users.add(new User(resultSet.getString("users.mail"),
                                 resultSet.getString("users.password"),
                                 resultSet.getString("users_role.role_user")));

@@ -4,7 +4,6 @@ import Entity.*;
 import connection.ConnectionManager;
 
 import java.sql.*;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -35,7 +34,7 @@ public class ActorDirectorDao {
                     Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, actorDirector.getFirstName());
                 preparedStatement.setString(2, actorDirector.getLastName());
-                preparedStatement.setObject(3, actorDirector.getBirthdayDay());
+                preparedStatement.setObject(3, actorDirector.getBirthday());
                 preparedStatement.executeUpdate();
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
@@ -58,8 +57,8 @@ public class ActorDirectorDao {
                     while (resultSet.next()) {
                         actorDirectors.add(new ActorDirector(resultSet.getLong("actors_directors.id"),
                                 resultSet.getString("actors_directors.first_name"),
-                                resultSet.getString("actors_directors.last_name")));
-                               // resultSet.getObject("actors_directors.birthday",LocalDate.class()
+                                resultSet.getString("actors_directors.last_name"),
+                                resultSet.getObject("actors_directors.birthday", LocalDate.class)));
                     }
                 }
             }
@@ -69,7 +68,7 @@ public class ActorDirectorDao {
         return actorDirectors;
     }
 
-//    "SELECT actors_directors.first_name, actors_directors.last_name, films.name, role.role ,genres.genres FROM actors_directors " +
+    //    "SELECT actors_directors.first_name, actors_directors.last_name, films.name, role.role ,genres.genres FROM actors_directors " +
 //            "LEFT JOIN films_act_dir ON actors_directors.id = films_act_dir.actor_director_id " +
 //            "LEFT JOIN films ON films_act_dir.film_id = films.id " +
 //            "LEFT JOIN  role ON actors_directors.role_id = role.id " +
@@ -77,7 +76,7 @@ public class ActorDirectorDao {
     public Optional<ActorDirector> listActorDirector(long id) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT actors_directors.first_name, actors_directors.last_name, films.name, role.role ,genres.genres FROM actors_directors " +
+                    ("SELECT actors_directors.first_name, actors_directors.last_name,actors_directors.birthday, films.name, role.role ,genres.genres FROM actors_directors " +
                             "LEFT JOIN films_act_dir ON actors_directors.id = films_act_dir.actor_director_id " +
                             "LEFT JOIN films ON films_act_dir.film_id = films.id " +
                             "LEFT JOIN role ON films_act_dir.role_id = role.id " +
@@ -89,6 +88,7 @@ public class ActorDirectorDao {
                     while (resultSet.next()) {
                         actorDirector.setFirstName(resultSet.getString("actors_directors.first_name"));
                         actorDirector.setLastName(resultSet.getString("actors_directors.last_name"));
+                        actorDirector.setBirthday(resultSet.getObject("actors_directors.birthday", LocalDate.class));
                         filmHashSet.add(new Film(resultSet.getString("films.name"),
                                 new Genre(resultSet.getString("genres.genres")),
                                 new Role(resultSet.getString("role.role"))));

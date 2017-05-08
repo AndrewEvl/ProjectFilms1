@@ -158,7 +158,7 @@ public class FilmDao {
     public Optional<Film> listFilms(long id) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                            ("SELECT films.name,genres.genres, actors_directors.last_name, actors_directors.first_name, role.role, reviews.text, users.nick_name FROM films " +
+                            ("SELECT films.name,genres.genres,films.relese_day, actors_directors.birthday, actors_directors.last_name, actors_directors.first_name, role.role, reviews.text, users.nick_name FROM films " +
                                     "JOIN films_act_dir ON films.id = films_act_dir.film_id " +
                                     "JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +
                                     "JOIN genres ON films.genre_id = genres.id " +
@@ -175,8 +175,12 @@ public class FilmDao {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
                         film.setName(resultSet.getString("films.name"));
-                        actorDirectorHashSet.add(new ActorDirector(resultSet.getString("actors_directors.first_name"), resultSet.getString("actors_directors.last_name"), new Role(resultSet.getString("role.role"))));
+                        actorDirectorHashSet.add(new ActorDirector(resultSet.getString("actors_directors.first_name"),
+                                resultSet.getString("actors_directors.last_name"),
+                                resultSet.getObject("actors_directors.birthday", LocalDate.class),
+                                new Role(resultSet.getString("role.role"))));
                         film.setActors(actorDirectorHashSet);
+                        film.setReleaseDay(resultSet.getObject("films.relese_day", LocalDate.class));
                         reviewHashSet.add(new Review(new User(resultSet.getString("users.nick_name")), resultSet.getString("reviews.text")));
                         film.setReviews(reviewHashSet);
                         Genre genre = new Genre(resultSet.getString("genres.genres"));
