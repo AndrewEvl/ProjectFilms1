@@ -30,9 +30,9 @@ public class UserService {
         return user;
     }
 
-    public User loginIfoUser (User user){
-        UserDao.getInstance().userinfo(user);
-        return user;
+    public User loginIfoUser (String nickName, String password){
+        return UserDao.getInstance().userinfo(nickName, password);
+
     }
 
     public boolean loginUser (User user){

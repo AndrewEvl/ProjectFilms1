@@ -1,5 +1,6 @@
 package servlet.userServlet;
 
+import Dao.UserDao;
 import Entity.User;
 import Service.UserService;
 
@@ -35,8 +36,9 @@ public class LoginServlet extends HttpServlet {
             return;
         }
         if (UserService.getInstance().loginUser(new User(nickName, password))) {
-            req.getSession().setAttribute("userNickName",UserService.getInstance().loginIfoUser(new User(nickName, password)).getNickName());
-            req.getSession().setAttribute("userRole",UserService.getInstance().loginIfoUser(new User(nickName, password)).getRole());
+            req.getSession().setAttribute("userNickName",nickName);
+            User user = UserDao.getInstance().userinfo(nickName, password);
+            req.getSession().setAttribute("userRole",user.getRole());
             resp.sendRedirect("/");
         }
     }
