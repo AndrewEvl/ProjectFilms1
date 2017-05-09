@@ -11,6 +11,35 @@ public class Review {
     private String text;
     private double mark;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Review review = (Review) o;
+
+        if (id != review.id) return false;
+        if (filmId != review.filmId) return false;
+        if (Double.compare(review.mark, mark) != 0) return false;
+        if (film != null ? !film.equals(review.film) : review.film != null) return false;
+        if (user != null ? !user.equals(review.user) : review.user != null) return false;
+        return text != null ? text.equals(review.text) : review.text == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (film != null ? film.hashCode() : 0);
+        result = 31 * result + (int) (filmId ^ (filmId >>> 32));
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (text != null ? text.hashCode() : 0);
+        temp = Double.doubleToLongBits(mark);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
     public Review(long filmId, User user, String text) {
         this.filmId = filmId;
         this.user = user;
@@ -62,21 +91,6 @@ public class Review {
                 ", text='" + text + '\'' +
                 ", mark=" + mark +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Review review = (Review) o;
-
-        return id == review.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
     }
 
     public long getId() {

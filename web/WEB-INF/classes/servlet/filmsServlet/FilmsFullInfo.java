@@ -1,10 +1,6 @@
 package servlet.filmsServlet;
 
-import Entity.Film;
-import Entity.Review;
-import Entity.User;
 import Service.FilmService;
-import Service.ReviewService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

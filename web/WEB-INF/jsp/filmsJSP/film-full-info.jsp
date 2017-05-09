@@ -23,9 +23,10 @@
     Имя : ${actors.firstName}${" "}${actors.lastName}${" "}<br> Дата рождения :${actors.birthday}${" "}<br> Роль : ${actors.role}<br></p>
 </c:forEach>
 <p></p>
-Отзовы :<br>
+Отзывы :<br>
+
 <c:forEach items="${requestScope.info.reviews}" var="reviews">
-    Имя : ${reviews.user.nickName}<br>${reviews.text}<br>
+    <p>Имя : ${reviews.user.nickName}<br>${reviews.text}<br></p>
 </c:forEach>
 
 <form action="${pageContext.request.contextPath}/filmsinfo?id=${requestScope.rew.id}" method="post">

@@ -50,6 +50,7 @@ public class UserDao {
                     ("INSERT INTO user_role_user (users_id, users_role_id) VALUE (?,?)")) {
                 preparedStatement.setLong(1, user.getId());
                 preparedStatement.setLong(2, 2);
+                preparedStatement.executeUpdate();
             }
             connection.commit();
             return Optional.of(user);
