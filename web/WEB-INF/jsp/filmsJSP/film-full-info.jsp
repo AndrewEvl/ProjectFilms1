@@ -26,10 +26,10 @@
 Отзывы :<br>
 
 <c:forEach items="${requestScope.info.reviews}" var="reviews">
-    <p>Имя : ${reviews.user.nickName}<br>${reviews.text}<br></p>
+    <p>Имя : ${reviews.user.nickName}<br> Отзыв : ${reviews.text}<br></p>
 </c:forEach>
 
-<form action="${pageContext.request.contextPath}/filmsinfo?id=${requestScope.rew.id}" method="post">
+<form action=" " method="post">
     <label for="review">Review</label>
     <input type="text" id="review" name="review"><br>
     <button type="submit">Save</button>

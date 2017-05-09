@@ -2,10 +2,7 @@ package Dao;
 
 import Entity.Review;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Optional;
 
 import connection.ConnectionManager;
@@ -37,12 +34,16 @@ public class ReviewsDao {
                             , Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, review.getText());
                 preparedStatement.executeUpdate();
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()){
+                    review.setId(generatedKeys.getLong(1));
+                }
             }
             try (PreparedStatement preparedStatement = connection.prepareStatement
                     ("INSERT INTO user_review (user_id, review_id, film_id) VALUE (?, ?, ?)")) {
+                preparedStatement.setLong(1, review.getUser().getId());
                 preparedStatement.setLong(2, review.getId());
                 preparedStatement.setLong(3, review.getFilm().getId());
-                preparedStatement.setLong(1, review.getUser().getId());
                 preparedStatement.executeUpdate();
             }
             connection.commit();
@@ -53,19 +54,19 @@ public class ReviewsDao {
         return Optional.empty();
     }
 
-    public Optional<Review> addReview(Review review) {
-        try (Connection connection = ConnectionManager.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement
-                    ("INSERT INTO reviews (text, mark) VALUES (?, ?)"
-                            , Statement.RETURN_GENERATED_KEYS);
-            {
-                preparedStatement.setString(1, review.getText());
-                preparedStatement.setDouble(2, review.getMark());
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public Optional<Review> addReview(Review review) {
+//        try (Connection connection = ConnectionManager.getConnection()) {
+//            PreparedStatement preparedStatement = connection.prepareStatement
+//                    ("INSERT INTO reviews (text, mark) VALUES (?, ?)"
+//                            , Statement.RETURN_GENERATED_KEYS);
+//            {
+//                preparedStatement.setString(1, review.getText());
+//                preparedStatement.setDouble(2, review.getMark());
+//                preparedStatement.executeUpdate();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }

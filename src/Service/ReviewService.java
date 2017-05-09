@@ -22,7 +22,7 @@ public class ReviewService {
     }
 
     public Review saveReview (Review review){
-        ReviewsDao.getInstance().addReview(review);
+        ReviewsDao.getInstance().save(review);
         return review;
     }
 }
