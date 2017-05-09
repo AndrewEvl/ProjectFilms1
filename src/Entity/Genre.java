@@ -47,13 +47,13 @@ public class Genre {
         Genre genre = (Genre) o;
 
         if (id != genre.id) return false;
-        return name.equals(genre.name);
+        return name != null ? name.equals(genre.name) : genre.name == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + name.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 

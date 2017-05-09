@@ -1,11 +1,9 @@
-CREATE DATABASE project;
-USE project;
 
 CREATE TABLE genres (id INT AUTO_INCREMENT, genres VARCHAR (20) UNIQUE, PRIMARY KEY (id));
 CREATE TABLE role (id INT AUTO_INCREMENT, role VARCHAR (20) UNIQUE, PRIMARY KEY (id));
 CREATE TABLE films (id INT AUTO_INCREMENT, name VARCHAR(100), country VARCHAR(32), relese_day DATE,
                     genre_id INT, PRIMARY KEY (id), FOREIGN KEY (genre_id) REFERENCES genres (id));
-CREATE TABLE actors_directors (id INT AUTO_INCREMENT,first_name VARCHAR(50), last_name VARCHAR(50), birthday DATE);
+CREATE TABLE actors_directors (id INT AUTO_INCREMENT,first_name VARCHAR(50), last_name VARCHAR(50), birthday DATE,PRIMARY KEY (id));
 CREATE TABLE users (id INT AUTO_INCREMENT, first_name VARCHAR (50), last_name VARCHAR (50), nick_name VARCHAR(50), birthday DATE,
                     password VARCHAR (15), mail VARCHAR (60) UNIQUE, PRIMARY KEY(id));
 CREATE TABLE reviews (id INT AUTO_INCREMENT, text VARCHAR (1000), mark INT, PRIMARY KEY(id));

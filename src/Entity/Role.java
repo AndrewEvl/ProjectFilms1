@@ -28,14 +28,17 @@ public class Role {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Role role = (Role) o;
+        Role role1 = (Role) o;
 
-        return id == role.id;
+        if (id != role1.id) return false;
+        return role != null ? role.equals(role1.role) : role1.role == null;
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
     }
 
     @Override

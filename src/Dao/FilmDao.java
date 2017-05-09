@@ -157,13 +157,13 @@ public class FilmDao {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
                             ("SELECT films.id, films.name,genres.genres,films.relese_day, actors_directors.birthday, actors_directors.last_name, actors_directors.first_name, role.role, reviews.text, users.nick_name FROM films " +
-                                    "JOIN films_act_dir ON films.id = films_act_dir.film_id " +
-                                    "JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +
-                                    "JOIN genres ON films.genre_id = genres.id " +
+                                    "LEFT JOIN films_act_dir ON films.id = films_act_dir.film_id " +
+                                    "LEFT JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +
+                                    "LEFT JOIN genres ON films.genre_id = genres.id " +
                                     "LEFT JOIN user_review ON films.id = user_review.film_id " +
                                     "LEFT JOIN reviews ON user_review.review_id = reviews.id " +
                                     "LEFT JOIN users ON user_review.user_id = users.id " +
-                                    "JOIN role ON actors_directors.role_id = role.id WHERE films.id = ?;")) {
+                                    "LEFT JOIN role ON actors_directors.role_id = role.id WHERE films.id = ?;")) {
                 preparedStatement.setLong(1, id);
 
                 Set<ActorDirector> actorDirectorHashSet = new HashSet<>();

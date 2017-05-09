@@ -222,9 +222,7 @@ public class Film {
         if (county != null ? !county.equals(film.county) : film.county != null) return false;
         if (genre != null ? !genre.equals(film.genre) : film.genre != null) return false;
         if (reviews != null ? !reviews.equals(film.reviews) : film.reviews != null) return false;
-        if (role != null ? !role.equals(film.role) : film.role != null) return false;
-
-        return true;
+        return role != null ? role.equals(film.role) : film.role == null;
     }
 
     @Override
