@@ -11,7 +11,6 @@
     <title>Создание нового пользователя</title>
 </head>
 <body>
-<%@include file="../header.jsp"%>
 <form action="${pageContext.request.contextPath}/usersave" method="post">
     <label for="firstName" id="firstName">Имя</label>
     <input type="text" name="firstName"><br>
@@ -27,7 +26,6 @@
     <input type="email" name="mail"><br>
     <button type="submit">Save</button>
 </form>
-<a href="${pageContext.request.contextPath}/">На главную</a>
-<%@include file="../footer.jsp"%>
+<a href="${pageContext.request.contextPath}/login">Назад</a>
 </body>
 </html>
