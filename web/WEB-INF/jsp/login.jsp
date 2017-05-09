@@ -19,5 +19,7 @@
     <button type="submit">Войти</button>
 </form>
 
+<a href="${pageContext.request.contextPath}/usersave">Зарегестрироваться</a><br>
+
 </body>
 </html>

@@ -11,7 +11,7 @@
     <title></title>
 </head>
 <p>Приветствую! ${sessionScope.userNickName}.</p>
-<a href="${pageContext.request.contextPath}/usersave"><fmt:message key="addUser"/> </a><br>
+
 <a href="${pageContext.request.contextPath}/filmsave"><fmt:message key="addFilm"/></a><br>
 <a href="${pageContext.request.contextPath}/actdirsave"><fmt:message key="addActor"/></a><br>
 <a href="${pageContext.request.contextPath}/filmList"><fmt:message key="FilmsList"/></a><br>

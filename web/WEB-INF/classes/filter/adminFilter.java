@@ -7,11 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Lino on 07.05.2017.
+ * Created by Lino on 09.05.2017.
  */
-@WebFilter({"/actordirectorinfo", "/find-film", "/fullinfoactor", "/filmList", "/ ", "/getFile", "/filmsave", "/actdirsave"})
-public class loginFilter implements Filter{
-
+@WebFilter ({"/filmsave", "/actdirsave"})
+public class adminFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -21,8 +20,9 @@ public class loginFilter implements Filter{
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if(servletRequest instanceof HttpServletRequest){
             HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-            Object inLogin = httpServletRequest.getSession().getAttribute("userNickName");
-            if (inLogin == null && !httpServletRequest.getRequestURI().contains("/login")) {
+            String  admin ="User";
+            Object role = httpServletRequest.getSession().getAttribute("userRole");
+            if (admin.equals(role) && !httpServletRequest.getRequestURI().contains("/login")) {
                 ((HttpServletResponse)servletResponse).sendRedirect("/login");
             }else {
                 filterChain.doFilter(servletRequest,servletResponse);
