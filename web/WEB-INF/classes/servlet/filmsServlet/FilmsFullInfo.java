@@ -23,9 +23,9 @@ public class FilmsFullInfo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Film film = new Film(Long.valueOf(req.getParameter("id")));
-        req.getSession().setAttribute("filmId",film.getId());
-       req.setAttribute("info", FilmService.getInstance().fullFilmInfo(Long.parseLong((req.getParameter("id")))).get());
-       getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-full-info.jsp").forward(req, resp);
+        req.getSession().setAttribute("filmId", film.getId());
+        req.setAttribute("info", FilmService.getInstance().fullFilmInfo(Long.parseLong((req.getParameter("id")))).get());
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-full-info.jsp").forward(req, resp);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class FilmsFullInfo extends HttpServlet {
         String review = req.getParameter("review");
         Long userId = (Long) req.getSession().getAttribute("userId");
         Long filmId = (Long) req.getSession().getAttribute("filmId");
-        ReviewService.getInstance().saveReview(new Review(new Film(filmId),new User(userId),review));
+        ReviewService.getInstance().saveReview(new Review(new Film(filmId), new User(userId), review));
         RequestDispatcher requestDispatcher = getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-full-info.jsp");
         requestDispatcher.forward(req, resp);

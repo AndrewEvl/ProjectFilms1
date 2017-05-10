@@ -29,10 +29,11 @@
     <p>Имя : ${reviews.user.nickName}<br> Отзыв : ${reviews.text}<br></p>
 </c:forEach>
 
+
 <form action=" " method="post">
-    <label for="review">Review</label>
+    <label for="review">Пишите отзыв :</label>
     <input type="text" id="review" name="review"><br>
-    <button type="submit">Save</button>
+    <button type="submit">Добавить отзыв</button>
 </form>
 </body>
 </html>

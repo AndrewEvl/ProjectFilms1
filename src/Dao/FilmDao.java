@@ -181,7 +181,7 @@ public class FilmDao {
                                     "LEFT JOIN user_review ON films.id = user_review.film_id " +
                                     "LEFT JOIN reviews ON user_review.review_id = reviews.id " +
                                     "LEFT JOIN users ON user_review.user_id = users.id " +
-                                    "LEFT JOIN role ON actors_directors.role_id = role.id WHERE films.id = ?;")) {
+                                    "LEFT JOIN role ON films_act_dir.role_id = role.id WHERE films.id = ?;")) {
                 preparedStatement.setLong(1, id);
 
                 Set<ActorDirector> actorDirectorHashSet = new HashSet<>();
