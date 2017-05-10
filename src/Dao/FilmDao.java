@@ -26,7 +26,7 @@ public class FilmDao {
         return INSTANCE;
     }
 
-    public Optional<Film> save(Film film, long genreId, long actDirId, long roleId) {
+    public Optional<Film> save(Film film, long genreId, long actDirId, long roleId, long secondActDir, long secondRole) {
         try (Connection connection = ConnectionManager.getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement preparedStatement = connection.prepareStatement
@@ -52,6 +52,13 @@ public class FilmDao {
                 preparedStatement.setLong(1, film.getId());
                 preparedStatement.setLong(2, actDirId);
                 preparedStatement.setLong(3, roleId);
+                preparedStatement.executeUpdate();
+            }
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO films_act_dir (film_id, actor_director_id, role_id) VALUES (?, ?, ?);")) {
+                preparedStatement.setLong(1, film.getId());
+                preparedStatement.setLong(2, secondActDir);
+                preparedStatement.setLong(3, secondRole);
                 preparedStatement.executeUpdate();
             }
             connection.commit();

@@ -23,6 +23,7 @@ public class FilmSave extends HttpServlet {
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/filmsJSP/filmSave.jsp");
         req.setAttribute("genres", FilmService.getInstance().fullGenres());
         req.setAttribute("role", ActorDirectorService.getInstance().allRole());
+        req.setAttribute("roleOne", ActorDirectorService.getInstance().allRole());
         req.setAttribute("actDir", ActorDirectorService.getInstance().fullActorDirector());
         requestDispatcher.forward(req, resp);
     }
@@ -35,12 +36,16 @@ public class FilmSave extends HttpServlet {
         String country = req.getParameter("country");
         Long genreId = Long.valueOf(req.getParameter("genre"));
 
-        Long directorRole = Long.valueOf(req.getParameter("role"));
-        Long actDirIdFirst = Long.valueOf(req.getParameter("firstId"));
+        Long role = Long.valueOf(req.getParameter("role"));
+        Long firstId = Long.valueOf(req.getParameter("firstId"));
+
+        Long roleOne = Long.valueOf(req.getParameter("roleOne"));
+        Long secondId = Long.valueOf(req.getParameter("secondId"));
 
         RequestDispatcher requestDispatcher = getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-success.jsp");
-        FilmService.getInstance().addFilm(new Film(name,releaseDay,country),genreId, actDirIdFirst, directorRole);
+
+        FilmService.getInstance().addFilm(new Film(name, releaseDay, country), genreId, firstId, role, secondId, roleOne);
         requestDispatcher.forward(req, resp);
     }
 }
