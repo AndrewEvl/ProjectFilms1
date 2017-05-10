@@ -34,6 +34,7 @@ public class FilmsFullInfo extends HttpServlet {
         String review = req.getParameter("review");
         Long userId = (Long) req.getSession().getAttribute("userId");
         Long filmId = (Long) req.getSession().getAttribute("filmId");
+        req.setAttribute("info", FilmService.getInstance().fullFilmInfo(Long.parseLong((req.getParameter("id")))).get());
         ReviewService.getInstance().saveReview(new Review(new Film(filmId), new User(userId), review));
         RequestDispatcher requestDispatcher = getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-full-info.jsp");
