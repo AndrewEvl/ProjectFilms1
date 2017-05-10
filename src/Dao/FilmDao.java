@@ -26,7 +26,7 @@ public class FilmDao {
         return INSTANCE;
     }
 
-    public Optional<Film> save(Film film, long genreId, long actDirId, long roleId, long secondActDir, long secondRole) {
+    public Optional<Film> save(Film film, long genreId, long actDirId, long roleId) {
         try (Connection connection = ConnectionManager.getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement preparedStatement = connection.prepareStatement
@@ -54,13 +54,6 @@ public class FilmDao {
                 preparedStatement.setLong(3, roleId);
                 preparedStatement.executeUpdate();
             }
-            try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO films_act_dir (film_id, actor_director_id, role_id) VALUES (?, ?, ?);")) {
-                preparedStatement.setLong(1, film.getId());
-                preparedStatement.setLong(2, secondActDir);
-                preparedStatement.setLong(3, secondRole);
-                preparedStatement.executeUpdate();
-            }
             connection.commit();
             return Optional.of(film);
         } catch (SQLException e) {
@@ -69,21 +62,39 @@ public class FilmDao {
         return Optional.empty();
     }
 
-//    public Optional<Film> getById(long id) {
-//        try (Connection connection = ConnectionManager.getConnection()) {
-//            try (PreparedStatement preparedStatement = connection.prepareStatement(
-//                    "SELECT * FROM films WHERE id = ?")) {
-//                preparedStatement.setLong(1, id);
-//                ResultSet resultSet = preparedStatement.executeQuery();
-//                if (resultSet.next()) {
-//                    return Optional.of(new Film(id, resultSet.getString("name")));
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return Optional.empty();
-//    }
+    public Optional<ActorDirector> addActor (ActorDirector actorDirector,long filmId) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO films_act_dir (film_id, actor_director_id, role_id) VALUES (?, ?, ?);")) {
+                preparedStatement.setLong(1, filmId);
+                preparedStatement.setLong(2, actorDirector.getId());
+                preparedStatement.setLong(3, actorDirector.getRole().getId());
+                preparedStatement.executeUpdate();
+            }
+            return Optional.of(actorDirector);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+
+
+    public Optional<Film> getById (String name) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM films WHERE name = ?")) {
+                preparedStatement.setString(1, name);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return Optional.of(new Film( resultSet.getLong("id")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
 
     public List<Film> getByYear(LocalDate releaseDay) {
         List<Film> yearFilms = new ArrayList<>();

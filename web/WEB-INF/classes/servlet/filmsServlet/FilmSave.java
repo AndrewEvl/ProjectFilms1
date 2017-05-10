@@ -1,6 +1,9 @@
 package servlet.filmsServlet;
 
+import Dao.FilmDao;
+import Entity.ActorDirector;
 import Entity.Film;
+import Entity.Role;
 import Service.ActorDirectorService;
 import Service.FilmService;
 
@@ -42,10 +45,12 @@ public class FilmSave extends HttpServlet {
         Long roleOne = Long.valueOf(req.getParameter("roleOne"));
         Long secondId = Long.valueOf(req.getParameter("secondId"));
 
+        Film film = new Film(name, releaseDay, country);
+        FilmService.getInstance().addFilm(film, genreId, firstId, role);
+        FilmDao.getInstance().addActor(new ActorDirector(secondId,new Role(roleOne)),film.getId());
+
         RequestDispatcher requestDispatcher = getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/filmsJSP/film-success.jsp");
-
-        FilmService.getInstance().addFilm(new Film(name, releaseDay, country), genreId, firstId, role, secondId, roleOne);
         requestDispatcher.forward(req, resp);
     }
 }
