@@ -24,5 +24,7 @@
     Название фильма : ${film.name}${" "}<br> Жанр Фильма : ${film.genre}<br>
     Роль в фильме : ${film.role}<br></p>
 </c:forEach>
+
+<a href="${pageContext.request.contextPath}/">На главную</a>
 </body>
 </html>

@@ -17,5 +17,6 @@
 <c:forEach items="${requestScope.films}" var="film">
     <a href="${pageContext.request.contextPath}/filmsinfo?id=${film.id}">${film.name}${" "}${film.county}</a> <br>
 </c:forEach>
+<a href="${pageContext.request.contextPath}/">На главную</a>
 </body>
 </html>

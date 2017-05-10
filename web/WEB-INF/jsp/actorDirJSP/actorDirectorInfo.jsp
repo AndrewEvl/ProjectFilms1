@@ -17,5 +17,7 @@
 <c:forEach items="${requestScope.info}" var="actor">
     <a href="${pageContext.request.contextPath}/fullinfoactor?id=${actor.id}">${actor.firstName}${" "}${actor.lastName}</a><br>
 </c:forEach>
+
+<a href="${pageContext.request.contextPath}/">На главную</a>
 </body>
 </html>

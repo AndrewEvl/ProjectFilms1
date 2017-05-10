@@ -11,9 +11,9 @@
     <title>Title</title>
 </head>
 <body>
-<%@include file="../header.jsp"%>
+
     Пользователь сохранён
 <a href="${pageContext.request.contextPath}/">На главную</a>
-<%@include file="../footer.jsp"%>
+
 </body>
 </html>

@@ -35,5 +35,7 @@
     <input type="text" id="review" name="review"><br>
     <button type="submit">Добавить отзыв</button>
 </form>
+
+<a href="${pageContext.request.contextPath}/">На главную</a>
 </body>
 </html>
