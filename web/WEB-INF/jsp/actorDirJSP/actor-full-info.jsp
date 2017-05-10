@@ -18,11 +18,11 @@
 Фамилия : ${requestScope.actor.lastName}<br>
 Дата рождения : ${requestScope.actor.birthday}<br>
 
-<p></p>
+<p>
 Список фильмов :<br>
 <c:forEach items="${requestScope.actor.film}" var="film">
     Название фильма : ${film.name}${" "}<br> Жанр Фильма : ${film.genre}<br>
-    Роль в фильме : ${film.role}<br>
+    Роль в фильме : ${film.role}<br></p>
 </c:forEach>
 </body>
 </html>

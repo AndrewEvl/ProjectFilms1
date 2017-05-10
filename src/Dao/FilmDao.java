@@ -137,12 +137,34 @@ public class FilmDao {
         List<Film> downlodFilmList = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement
-                    ("SELECT name, country, relese_day, genres.genres FROM films " +
-                            "JOIN genres ON films.genre_id = genres.id")) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()){
-                    while (resultSet.next()){
-                        downlodFilmList.add(new Film(resultSet.getString("name"),
-                                resultSet.getString("country")));
+                    ("SELECT films.id, films.name,genres.genres,films.relese_day, actors_directors.birthday, actors_directors.last_name, actors_directors.first_name, role.role, reviews.text, users.nick_name FROM films " +
+                            "LEFT JOIN films_act_dir ON films.id = films_act_dir.film_id " +
+                            "LEFT JOIN actors_directors ON films_act_dir.actor_director_id = actors_directors.id " +
+                            "LEFT JOIN genres ON films.genre_id = genres.id " +
+                            "LEFT JOIN user_review ON films.id = user_review.film_id " +
+                            "LEFT JOIN reviews ON user_review.review_id = reviews.id " +
+                            "LEFT JOIN users ON user_review.user_id = users.id " +
+                            "LEFT JOIN role ON films_act_dir.role_id = role.id;")) {
+
+                Set<ActorDirector> actorDirectorHashSet = new HashSet<>();
+                Set<Review> reviewHashSet = new HashSet<>();
+                Film film = new Film();
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        film.setId(resultSet.getLong("films.id"));
+                        film.setName(resultSet.getString("films.name"));
+                        actorDirectorHashSet.add(new ActorDirector(resultSet.getString("actors_directors.first_name"),
+                                resultSet.getString("actors_directors.last_name"),
+                                resultSet.getObject("actors_directors.birthday", LocalDate.class),
+                                new Role(resultSet.getString("role.role"))));
+                        film.setActors(actorDirectorHashSet);
+                        film.setReleaseDay(resultSet.getObject("films.relese_day", LocalDate.class));
+                        reviewHashSet.add(new Review(new User(resultSet.getString("users.nick_name")), resultSet.getString("reviews.text")));
+                        film.setReviews(reviewHashSet);
+                        Genre genre = new Genre(resultSet.getString("genres.genres"));
+                        film.setGenre(genre);
+                        downlodFilmList.add(film);
                     }
                 }
             }

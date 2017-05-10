@@ -3,14 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ include file="language.jsp"%>
+<%@ include file="WEB-INF/jsp/language.jsp"%>
 <fmt:setLocale value="${not empty sessionScope.currentLanguage ? sessionScope.currentLanguage : 'ru_RU'}"/>
 <fmt:setBundle basename="translations"/>
 <html>
 <head>
     <title></title>
 </head>
-<p>Приветствую! ${sessionScope.userNickName}.</p>
+<p><fmt:message key="Greating"/> ${sessionScope.userNickName}.</p>
 
 <a href="${pageContext.request.contextPath}/filmsave"><fmt:message key="addFilm"/></a><br>
 <a href="${pageContext.request.contextPath}/actdirsave"><fmt:message key="addActor"/></a><br>
